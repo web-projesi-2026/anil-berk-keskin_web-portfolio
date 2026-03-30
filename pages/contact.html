@@ -4,9 +4,8 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>İletişim — Anıl Berk Keskin</title>
-  <link rel="stylesheet" href="style.css"/>
+  <link rel="stylesheet" href="assets/css/style.css"/>
   <style>
-    /* ── PAGE HERO ───────────────────────── */
     .contact-hero {
       padding: 80px var(--page-pad) 60px;
       background: var(--white);
@@ -48,14 +47,12 @@
       position: relative; z-index: 1;
     }
 
-    /* ── MAIN LAYOUT ─────────────────────── */
     .contact-layout {
       display: grid;
       grid-template-columns: 1fr 1.4fr;
       min-height: 520px;
     }
 
-    /* LEFT — info */
     .contact-info {
       padding: 72px var(--page-pad);
       background: var(--cream);
@@ -162,7 +159,6 @@
     .avail-row .key { color: var(--warm-gray); }
     .avail-row .val { color: var(--ink); font-weight: 500; }
 
-    /* RIGHT — form */
     .contact-form-wrap {
       padding: 72px var(--page-pad);
       background: var(--white);
@@ -249,7 +245,6 @@
       line-height: 1.5;
     }
 
-    /* ── SUCCESS MESSAGE ─────────────────── */
     .success-msg {
       display: none;
       align-items: center;
@@ -282,18 +277,17 @@
   
   <ul class="nav-links">
     <li><a href="index.html">Anasayfa</a></li>
-    <li><a href="hakkimda.html">Hakkımda</a></li>
-    <li><a href="projeler.html">Projeler</a></li>
-    <li><a href="iletisim.html">İletişim</a></li>
+    <li><a href="about.html">Hakkımda</a></li>
+    <li><a href="Projects.html">Projeler</a></li>
+    <li><a href="contact.html">İletişim</a></li>
   </ul>
   <div class="nav-cta">
-    <a href="iletisim.html" class="btn-nav">İletişime Geç</a>
+    <a href="contact.html" class="btn-nav">İletişime Geç</a>
   </div>
 </nav>
 
 <div class="page-wrap">
 
-  <!-- HERO -->
   <div class="contact-hero">
     <div class="section-label anim-fadein">İletişim</div>
     <h1 class="anim-fadeup anim-delay-1">
@@ -306,10 +300,8 @@
     </p>
   </div>
 
-  <!-- LAYOUT -->
   <div class="contact-layout">
 
-    <!-- LEFT -->
     <div class="contact-info reveal">
       <div class="info-block">
         <div class="section-label">Kanallar</div>
@@ -370,7 +362,6 @@
       </div>
     </div>
 
-    <!-- RIGHT — FORM -->
     <div class="contact-form-wrap reveal">
       <div class="section-label">Mesaj</div>
       <h2>Mesaj Gönder</h2>
@@ -434,7 +425,7 @@
   </footer>
 </div>
 
-<script src="main.js"></script>
+<script src="assets/js/main.js"></script>
 <script>
   function handleSend() {
     const btn = document.getElementById('sendBtn');
