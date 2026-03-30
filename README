@@ -1,1 +1,49 @@
+👨‍💻 Anıl Berk - Kişisel Web Portfolyosu
+Kırşehir Ahi Evran Üniversitesi Bilgisayar Programcılığı bölümü öğrencisi olarak, bugüne kadar geliştirdiğim akademik ve kişisel projelerimi sergilemek amacıyla hazırladığım web portfolyosudur. Bu proje, modüler bir HTML/CSS yapısı kullanılarak tasarlanmıştır.
 
+🔗 Canlı Görünüm: Proje Yayına Alındığında Buraya Link Gelecek
+
+📌 Proje Mimarisi ve Sayfalar
+Site, kullanıcı deneyimini artırmak için tek bir uzun sayfa yerine kategorize edilmiş sayfalardan oluşmaktadır:
+
+🏠 index.html — Karşılama ekranı ve kendimle ilgili kısa özet.
+
+👤 hakkimda.html — Eğitim hayatım, vizyonum ve kişisel ilgi alanlarım.
+
+⚙️ beceriler.html — Hakim olduğum programlama dilleri, yazılımlar ve teknik yetkinliklerim.
+
+💼 projeler.html — Geliştirme sürecinde yer aldığım projelerin (Web, Sistem Analizi vb.) detaylı dökümü.
+
+🚀 Portfolyoda Yer Alan Başlıca Çalışmalar
+Sitenin projeler.html kısmında sergilenen bazı önemli projelerim şunlardır:
+
+Anıl Klişe Web Otomasyonu: PHP ve MySQL kullanılarak geliştirilen; dinamik yapıda, kullanıcı kayıt/giriş ve online sipariş yönetimi sunan dönem projesi.
+
+Akıllı Raf Sistemi: Market stok yönetimi için tasarlanmış; RFID ve Elektronik Raf Etiketleri (ESL) ile entegre çalışan, son kullanma tarihlerini LED uyarılarıyla bildiren sistem analizi projesi.
+
+💻 Kullanılan Teknolojiler ve Araçlar
+Tasarım & İskelet: HTML5, CSS3
+
+Versiyon Kontrol: Git, GitHub
+
+Geliştirme Ortamı: VS Code (veya kullandığın editörü yazabilirsin)
+
+⚙️ Kurulum ve Çalıştırma
+Projeyi yerel bilgisayarınızda (local) çalıştırmak için:
+
+Bu depoyu klonlayın:
+
+Bash
+git clone https://github.com/AnilBerkKeskin/Anil_Berk_Keskin-Web_Portfolio.git
+İndirdiğiniz klasörü açın.
+
+index.html dosyasına çift tıklayarak varsayılan tarayıcınızda görüntüleyin. Herhangi bir yerel sunucu (localhost) kurulumuna gerek yoktur.
+
+📬 İletişim Ağım
+Bana aşağıdaki kanallardan ulaşabilirsiniz:
+
+GitHub: @AnilBerkKeskin
+
+LinkedIn: Profil Linkini Buraya Ekle
+
+E-posta: [E-posta Adresini Buraya Ekle]
