@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Hakkımda — Anıl Berk Keskin</title>
+  <link rel="stylesheet" href="style.css"/>
+  <style>
+    /* ── PAGE HERO ───────────────────────── */
+    .about-hero {
+      padding: 80px var(--page-pad) 60px;
+      border-bottom: 1px solid var(--cream-mid);
+      background: var(--white);
+      position: relative;
+      overflow: hidden;
+    }
+    .about-hero::after {
+      content: 'Hakkımda';
+      position: absolute;
+      right: var(--page-pad);
+      top: 50%;
+      transform: translateY(-50%);
+      font-family: var(--font-display);
+      font-size: clamp(5rem, 12vw, 14rem);
+      font-weight: 600;
+      color: var(--cream);
+      pointer-events: none;
+      white-space: nowrap;
+      line-height: 1;
+      letter-spacing: -4px;
+    }
+    .about-hero h1 {
+      font-family: var(--font-display);
+      font-size: clamp(2.8rem, 5vw, 5rem);
+      font-weight: 300;
+      letter-spacing: -2px;
+      line-height: 1.1;
+      position: relative;
+      z-index: 1;
+    }
+    .about-hero h1 em {
+      font-style: italic;
+      color: var(--accent);
+    }
+    .about-hero h1 strong { font-weight: 600; }
+
+    /* ── INTRO SECTION ───────────────────── */
+    .intro-section {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      background: var(--off-white);
+    }
+    .intro-col {
+      padding: 72px var(--page-pad);
+    }
+    .intro-col:first-child {
+      border-right: 1px solid var(--cream-mid);
+      background: var(--white);
+    }
+    .intro-col h2 {
+      font-family: var(--font-display);
+      font-size: 1.8rem;
+      font-weight: 400;
+      letter-spacing: -0.5px;
+      margin-bottom: 24px;
+    }
+    .intro-col h2 em { font-style: italic; color: var(--accent); }
+    .intro-col p {
+      font-size: 1rem;
+      color: var(--warm-gray);
+      line-height: 1.85;
+      margin-bottom: 20px;
+      font-weight: 300;
+    }
+    .intro-col p strong { color: var(--ink); font-weight: 600; }
+
+    /* ── SKILLS ──────────────────────────── */
+    .skills-section {
+      padding: 80px var(--page-pad);
+      background: var(--cream);
+      border-top: 1px solid var(--cream-mid);
+    }
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-top: 48px;
+    }
+    .skill-card {
+      background: var(--white);
+      border: 1px solid var(--cream-dark);
+      border-radius: var(--radius-md);
+      padding: 28px 24px;
+      transition: transform var(--transition), box-shadow var(--transition);
+    }
+    .skill-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
+    }
+    .skill-icon {
+      font-size: 1.8rem;
+      margin-bottom: 14px;
+      display: block;
+    }
+    .skill-card h3 {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      font-weight: 600;
+      letter-spacing: -0.3px;
+      margin-bottom: 8px;
+    }
+    .skill-card p {
+      font-size: 0.8rem;
+      color: var(--warm-gray);
+      line-height: 1.6;
+    }
+    .skill-level {
+      margin-top: 16px;
+      height: 3px;
+      background: var(--cream-mid);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+    .skill-level-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent), var(--accent-hover));
+      border-radius: 2px;
+      transition: width 1.2s cubic-bezier(0.4,0,0.2,1);
+    }
+
+    /* ── TIMELINE ────────────────────────── */
+    .timeline-section {
+      padding: 80px var(--page-pad);
+      background: var(--white);
+      border-top: 1px solid var(--cream-mid);
+    }
+    .timeline {
+      margin-top: 48px;
+      position: relative;
+    }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 116px;
+      top: 0; bottom: 0;
+      width: 1px;
+      background: var(--cream-mid);
+    }
+    .tl-item {
+      display: grid;
+      grid-template-columns: 116px 1fr;
+      gap: 0;
+      margin-bottom: 0;
+    }
+    .tl-year-col {
+      padding: 36px 32px 36px 0;
+      display: flex;
+      align-items: flex-start;
+      justify-content: flex-end;
+      position: relative;
+    }
+    .tl-year-col::after {
+      content: '';
+      position: absolute;
+      right: -5px;
+      top: 44px;
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      background: var(--white);
+      border: 2px solid var(--accent);
+    }
+    .tl-year {
+      font-family: var(--font-display);
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--accent);
+      letter-spacing: 0.5px;
+    }
+    .tl-content-col {
+      padding: 32px 0 32px 40px;
+      border-bottom: 1px solid var(--cream-mid);
+    }
+    .tl-item:last-child .tl-content-col { border-bottom: none; }
+    .tl-content-col strong {
+      display: block;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 4px;
+    }
+    .tl-content-col .tl-place {
+      font-size: 0.85rem;
+      color: var(--warm-gray);
+      margin-bottom: 8px;
+    }
+    .tl-content-col .tl-desc {
+      font-size: 0.875rem;
+      color: var(--ink-light);
+      line-height: 1.7;
+    }
+    .tl-badge {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 3px 12px;
+      border-radius: 4px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+    }
+    .badge-edu  { background: #e8f0fe; color: #3b5bcc; }
+    .badge-work { background: var(--accent-pale); color: var(--accent-hover); }
+    .badge-cert { background: #e8feee; color: #2d7d46; }
+
+    /* ── RESPONSIVE ──────────────────────── */
+    @media (max-width: 900px) {
+      .intro-section { grid-template-columns: 1fr; }
+      .intro-col:first-child { border-right: none; border-bottom: 1px solid var(--cream-mid); }
+      .skills-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 600px) {
+      .skills-grid { grid-template-columns: 1fr; }
+      .about-hero::after { display: none; }
+      .timeline::before { left: 70px; }
+      .tl-item { grid-template-columns: 70px 1fr; }
+      .tl-year-col { padding-right: 16px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="navbar">
+  
+  <ul class="nav-links">
+    <li><a href="index.html">Anasayfa</a></li>
+    <li><a href="hakkimda.html">Hakkımda</a></li>
+    <li><a href="projeler.html">Projeler</a></li>
+    <li><a href="iletisim.html">İletişim</a></li>
+  </ul>
+  <div class="nav-cta">
+    <a href="iletisim.html" class="btn-nav">İletişime Geç</a>
+  </div>
+</nav>
+
+<div class="page-wrap">
+
+  <!-- HERO -->
+  <div class="about-hero">
+    <div class="section-label anim-fadein">Hakkımda</div>
+    <h1 class="anim-fadeup anim-delay-1">
+      <em>Merhaba,</em><br>
+      Ben <strong>Anıl Berk Keskin.</strong>
+    </h1>
+  </div>
+
+  <!-- INTRO -->
+  <div class="intro-section">
+    <div class="intro-col reveal">
+      <h2>Kim <em>olduğum</em></h2>
+      <p>
+        <strong>Kırşehir Ahi Evran Üniversitesi</strong> Bilgisayar Programcılığı 2. sınıf öğrencisiyim. 
+        Yazılım benim için sadece okuduğum bölüm değil; fikirleri koda, kodları çalışan sistemlere dönüştürdüğüm bir tutku. 
+        Özellikle web geliştirme alanında ilerliyorum.
+      </p>
+      <p>
+        Özellikle web tarafına ilgim var. Bir şeyi tasarlayıp tarayıcıda
+        çalışır hale getirmek bana hâlâ heyecan veriyor. Henüz öğrenme
+        sürecindeyim ama her projede bir öncekinden daha iyisini yapmaya
+        çalışıyorum.
+      </p>
+    </div>
+    <div class="intro-col reveal">
+      <h2>Ne <em>yapıyorum</em></h2>
+      <p>
+        Ağırlıklı olarak Full-Stack web projeleri üzerine çalışıyorum. Yakın zamanda bir personel takip programı tamamladım, 
+        şu an ise dinamik bir e-ticaret sitesi tasarlıyorum. 
+        Projelerimi HTML, CSS, JS, PHP ve MySQL kullanarak hayata geçiriyorum.
+      </p>
+      <div style="margin-top:32px; display:flex; gap:12px; flex-wrap:wrap;">
+        <a href="projeler.html" class="btn-primary">Projelerimi Gör →</a>
+        <a href="iletisim.html" class="btn-secondary">İletişim</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- SKILLS -->
+  <section class="skills-section">
+    <div class="section-label">Yetenekler</div>
+    <h2 style="font-family:var(--font-display); font-size:clamp(2rem,3.5vw,3rem); font-weight:400; letter-spacing:-1px; margin-top:4px;">
+      Kullandığım <em style="font-style:italic; color:var(--accent)">araçlar</em>
+    </h2>
+
+    <div class="skills-grid reveal">
+      <div class="skill-card">
+        <span class="skill-icon">🌐</span>
+        <h3>HTML & CSS</h3>
+        <p>Semantik yapı, responsive tasarım, animasyon.</p>
+        <div class="skill-level"><div class="skill-level-fill" style="width:92%"></div></div>
+      </div>
+      <div class="skill-card">
+        <span class="skill-icon">⚡</span>
+        <h3>JavaScript</h3>
+        <p>ES6+, DOM manipülasyonu, API entegrasyonu.</p>
+        <div class="skill-level"><div class="skill-level-fill" style="width:80%"></div></div>
+      </div>
+      <div class="skill-card">
+        <span class="skill-icon">
+          <svg viewBox="0 0 128 128" width="36" height="36" xmlns="http://www.w3.org/2000/svg">
+            <ellipse cx="64" cy="64" rx="64" ry="64" fill="#8892bf"/>
+            <path fill="#fff" d="M27.03 68.074l3.103-15.496H24l.619-3.173h6.133l1.547-7.748h3.483l-1.547 7.748h5.135l-.619 3.173H33.62l-3.1 15.496zm12.348 0l4.272-21.338h9.948c2.72 0 4.755.826 6.109 2.48 1.353 1.653 1.666 3.842.939 6.566-.344 1.408-.906 2.708-1.686 3.9a10.73 10.73 0 01-2.886 3.003c-.96.69-1.987 1.175-3.08 1.454a14.94 14.94 0 01-3.574.394h-4.957l-1.506 7.54zm6.186-10.727h4.544c.97 0 1.887-.228 2.752-.684.864-.456 1.57-1.118 2.117-1.987.548-.87.928-1.8 1.14-2.793.284-1.422.1-2.54-.552-3.356-.652-.815-1.721-1.223-3.207-1.223h-4.33zm13.963 10.727l4.271-21.338H73.72c2.72 0 4.756.826 6.11 2.48 1.352 1.653 1.665 3.842.938 6.566-.344 1.408-.906 2.708-1.686 3.9a10.73 10.73 0 01-2.886 3.003c-.96.69-1.987 1.175-3.08 1.454a14.94 14.94 0 01-3.574.394H64.57l-1.506 7.54zm6.186-10.727h4.544c.97 0 1.887-.228 2.752-.684.864-.456 1.57-1.118 2.117-1.987.548-.87.928-1.8 1.14-2.793.284-1.422.1-2.54-.553-3.356-.651-.815-1.72-1.223-3.206-1.223h-4.33zm19.21 10.727l3.104-15.496H81.87l.619-3.173h6.133l1.547-7.748h3.483l-1.547 7.748h5.135l-.619 3.173H91.49l-3.1 15.496z"/>
+          </svg>
+        </span>
+        <h3>PHP</h3>
+        <p>Sunucu taraflı web geliştirme, form işlemleri, dinamik sayfa üretimi.</p>
+        <div class="skill-level"><div class="skill-level-fill" style="width:68%"></div></div>
+      </div>
+      <div class="skill-card">
+        <span class="skill-icon">🐬</span>
+        <h3>MySQL</h3>
+        <p>Veri tabanı tasarımı, tablo ilişkileri, temel SQL sorguları.</p>
+        <div class="skill-level"><div class="skill-level-fill" style="width:70%"></div></div>
+      </div>
+      <div class="skill-card">
+        <span class="skill-icon">🗃️</span>
+        <h3>SQL</h3>
+        <p>Veritabanı tasarımı, sorgular, ilişkisel veri.</p>
+        <div class="skill-level"><div class="skill-level-fill" style="width:65%"></div></div>
+      </div>
+      <div class="skill-card">
+        <span class="skill-icon">🔧</span>
+        <h3>Git & GitHub</h3>
+        <p>Versiyon kontrolü, dallanma, iş birliği.</p>
+        <div class="skill-level"><div class="skill-level-fill" style="width:75%"></div></div>
+      </div>
+    </div>
+  </section>
+  <footer>
+    <div class="footer-logo">Anıl Berk Keskin<span>.</span></div>
+    <ul class="footer-links">
+      <li><a href="index.html">Anasayfa</a></li>
+      <li><a href="about.html">Hakkımda</a></li>
+      <li><a href="projeler.html">Projeler</a></li>
+      <li><a href="iletisim.html">İletişim</a></li>
+    </ul>
+    <div class="footer-copy">© 2026 Anıl Berk Keskin. Tüm hakları saklıdır.</div>
+  </footer>
+</div>
+
+<script src="main.js"></script>
+</body>
+</html>
