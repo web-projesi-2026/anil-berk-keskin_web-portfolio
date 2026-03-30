@@ -2,7 +2,7 @@
 
 Kırşehir Ahi Evran Üniversitesi Bilgisayar Programcılığı bölümü öğrencisi olarak geliştirdiğim, projelerimi ve yetkinliklerimi sergilediğim kişisel web sitemdir.
 
-🔗 **Siteye Git:** [Link eklenecek](#)
+🔗 **Siteye Git:** [[Link eklenecek](#)](https://web-projesi-2026.github.io/anil-berk-keskin_web-portfolio/)
 
 ---
 
