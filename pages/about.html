@@ -4,9 +4,8 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Hakkımda — Anıl Berk Keskin</title>
-  <link rel="stylesheet" href="style.css"/>
+  <link rel="stylesheet" href="assets/css/style.css"/>
   <style>
-    /* ── PAGE HERO ───────────────────────── */
     .about-hero {
       padding: 80px var(--page-pad) 60px;
       border-bottom: 1px solid var(--cream-mid);
@@ -44,7 +43,6 @@
     }
     .about-hero h1 strong { font-weight: 600; }
 
-    /* ── INTRO SECTION ───────────────────── */
     .intro-section {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -74,7 +72,6 @@
     }
     .intro-col p strong { color: var(--ink); font-weight: 600; }
 
-    /* ── SKILLS ──────────────────────────── */
     .skills-section {
       padding: 80px var(--page-pad);
       background: var(--cream);
@@ -128,7 +125,6 @@
       transition: width 1.2s cubic-bezier(0.4,0,0.2,1);
     }
 
-    /* ── TIMELINE ────────────────────────── */
     .timeline-section {
       padding: 80px var(--page-pad);
       background: var(--white);
@@ -212,7 +208,6 @@
     .badge-work { background: var(--accent-pale); color: var(--accent-hover); }
     .badge-cert { background: #e8feee; color: #2d7d46; }
 
-    /* ── RESPONSIVE ──────────────────────── */
     @media (max-width: 900px) {
       .intro-section { grid-template-columns: 1fr; }
       .intro-col:first-child { border-right: none; border-bottom: 1px solid var(--cream-mid); }
@@ -233,18 +228,17 @@
   
   <ul class="nav-links">
     <li><a href="index.html">Anasayfa</a></li>
-    <li><a href="hakkimda.html">Hakkımda</a></li>
-    <li><a href="projeler.html">Projeler</a></li>
-    <li><a href="iletisim.html">İletişim</a></li>
+    <li><a href="about.html">Hakkımda</a></li>
+    <li><a href=Projects.html">Projeler</a></li>
+    <li><a href="contact.html">İletişim</a></li>
   </ul>
   <div class="nav-cta">
-    <a href="iletisim.html" class="btn-nav">İletişime Geç</a>
+    <a href="contact.html" class="btn-nav">İletişime Geç</a>
   </div>
 </nav>
 
 <div class="page-wrap">
 
-  <!-- HERO -->
   <div class="about-hero">
     <div class="section-label anim-fadein">Hakkımda</div>
     <h1 class="anim-fadeup anim-delay-1">
@@ -253,7 +247,6 @@
     </h1>
   </div>
 
-  <!-- INTRO -->
   <div class="intro-section">
     <div class="intro-col reveal">
       <h2>Kim <em>olduğum</em></h2>
@@ -277,13 +270,12 @@
         Projelerimi HTML, CSS, JS, PHP ve MySQL kullanarak hayata geçiriyorum.
       </p>
       <div style="margin-top:32px; display:flex; gap:12px; flex-wrap:wrap;">
-        <a href="projeler.html" class="btn-primary">Projelerimi Gör →</a>
-        <a href="iletisim.html" class="btn-secondary">İletişim</a>
+        <a href="Projects.html" class="btn-primary">Projelerimi Gör →</a>
+        <a href="contact.html" class="btn-secondary">İletişim</a>
       </div>
     </div>
   </div>
 
-  <!-- SKILLS -->
   <section class="skills-section">
     <div class="section-label">Yetenekler</div>
     <h2 style="font-family:var(--font-display); font-size:clamp(2rem,3.5vw,3rem); font-weight:400; letter-spacing:-1px; margin-top:4px;">
@@ -339,13 +331,13 @@
     <ul class="footer-links">
       <li><a href="index.html">Anasayfa</a></li>
       <li><a href="about.html">Hakkımda</a></li>
-      <li><a href="projeler.html">Projeler</a></li>
-      <li><a href="iletisim.html">İletişim</a></li>
+      <li><a href="Projects.html">Projeler</a></li>
+      <li><a href="contact.html">İletişim</a></li>
     </ul>
     <div class="footer-copy">© 2026 Anıl Berk Keskin. Tüm hakları saklıdır.</div>
   </footer>
 </div>
 
-<script src="main.js"></script>
+<script src="assets/js/main.js"></script>
 </body>
 </html>
