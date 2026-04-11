@@ -4,234 +4,22 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Hakkımda — Anıl Berk Keskin</title>
-  <link rel="stylesheet" href="../assets/css/style.css"/>
-  <style>
-    .about-hero {
-      padding: 80px var(--page-pad) 60px;
-      border-bottom: 1px solid var(--cream-mid);
-      background: var(--white);
-      position: relative;
-      overflow: hidden;
-    }
-    .about-hero::after {
-      content: 'Hakkımda';
-      position: absolute;
-      right: var(--page-pad);
-      top: 50%;
-      transform: translateY(-50%);
-      font-family: var(--font-display);
-      font-size: clamp(5rem, 12vw, 14rem);
-      font-weight: 600;
-      color: var(--cream);
-      pointer-events: none;
-      white-space: nowrap;
-      line-height: 1;
-      letter-spacing: -4px;
-    }
-    .about-hero h1 {
-      font-family: var(--font-display);
-      font-size: clamp(2.8rem, 5vw, 5rem);
-      font-weight: 300;
-      letter-spacing: -2px;
-      line-height: 1.1;
-      position: relative;
-      z-index: 1;
-    }
-    .about-hero h1 em {
-      font-style: italic;
-      color: var(--accent);
-    }
-    .about-hero h1 strong { font-weight: 600; }
-
-    .intro-section {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      background: var(--off-white);
-    }
-    .intro-col {
-      padding: 72px var(--page-pad);
-    }
-    .intro-col:first-child {
-      border-right: 1px solid var(--cream-mid);
-      background: var(--white);
-    }
-    .intro-col h2 {
-      font-family: var(--font-display);
-      font-size: 1.8rem;
-      font-weight: 400;
-      letter-spacing: -0.5px;
-      margin-bottom: 24px;
-    }
-    .intro-col h2 em { font-style: italic; color: var(--accent); }
-    .intro-col p {
-      font-size: 1rem;
-      color: var(--warm-gray);
-      line-height: 1.85;
-      margin-bottom: 20px;
-      font-weight: 300;
-    }
-    .intro-col p strong { color: var(--ink); font-weight: 600; }
-
-    .skills-section {
-      padding: 80px var(--page-pad);
-      background: var(--cream);
-      border-top: 1px solid var(--cream-mid);
-    }
-    .skills-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 16px;
-      margin-top: 48px;
-    }
-    .skill-card {
-      background: var(--white);
-      border: 1px solid var(--cream-dark);
-      border-radius: var(--radius-md);
-      padding: 28px 24px;
-      transition: transform var(--transition), box-shadow var(--transition);
-    }
-    .skill-card:hover {
-      transform: translateY(-4px);
-      box-shadow: var(--shadow-md);
-    }
-    .skill-icon {
-      font-size: 1.8rem;
-      margin-bottom: 14px;
-      display: block;
-    }
-    .skill-card h3 {
-      font-family: var(--font-display);
-      font-size: 1.1rem;
-      font-weight: 600;
-      letter-spacing: -0.3px;
-      margin-bottom: 8px;
-    }
-    .skill-card p {
-      font-size: 0.8rem;
-      color: var(--warm-gray);
-      line-height: 1.6;
-    }
-    .skill-level {
-      margin-top: 16px;
-      height: 3px;
-      background: var(--cream-mid);
-      border-radius: 2px;
-      overflow: hidden;
-    }
-    .skill-level-fill {
-      height: 100%;
-      background: linear-gradient(90deg, var(--accent), var(--accent-hover));
-      border-radius: 2px;
-      transition: width 1.2s cubic-bezier(0.4,0,0.2,1);
-    }
-
-    .timeline-section {
-      padding: 80px var(--page-pad);
-      background: var(--white);
-      border-top: 1px solid var(--cream-mid);
-    }
-    .timeline {
-      margin-top: 48px;
-      position: relative;
-    }
-    .timeline::before {
-      content: '';
-      position: absolute;
-      left: 116px;
-      top: 0; bottom: 0;
-      width: 1px;
-      background: var(--cream-mid);
-    }
-    .tl-item {
-      display: grid;
-      grid-template-columns: 116px 1fr;
-      gap: 0;
-      margin-bottom: 0;
-    }
-    .tl-year-col {
-      padding: 36px 32px 36px 0;
-      display: flex;
-      align-items: flex-start;
-      justify-content: flex-end;
-      position: relative;
-    }
-    .tl-year-col::after {
-      content: '';
-      position: absolute;
-      right: -5px;
-      top: 44px;
-      width: 10px; height: 10px;
-      border-radius: 50%;
-      background: var(--white);
-      border: 2px solid var(--accent);
-    }
-    .tl-year {
-      font-family: var(--font-display);
-      font-size: 0.9rem;
-      font-weight: 600;
-      color: var(--accent);
-      letter-spacing: 0.5px;
-    }
-    .tl-content-col {
-      padding: 32px 0 32px 40px;
-      border-bottom: 1px solid var(--cream-mid);
-    }
-    .tl-item:last-child .tl-content-col { border-bottom: none; }
-    .tl-content-col strong {
-      display: block;
-      font-size: 1rem;
-      font-weight: 600;
-      color: var(--ink);
-      margin-bottom: 4px;
-    }
-    .tl-content-col .tl-place {
-      font-size: 0.85rem;
-      color: var(--warm-gray);
-      margin-bottom: 8px;
-    }
-    .tl-content-col .tl-desc {
-      font-size: 0.875rem;
-      color: var(--ink-light);
-      line-height: 1.7;
-    }
-    .tl-badge {
-      display: inline-block;
-      margin-top: 10px;
-      padding: 3px 12px;
-      border-radius: 4px;
-      font-size: 0.7rem;
-      font-weight: 600;
-      letter-spacing: 0.8px;
-      text-transform: uppercase;
-    }
-    .badge-edu  { background: #e8f0fe; color: #3b5bcc; }
-    .badge-work { background: var(--accent-pale); color: var(--accent-hover); }
-    .badge-cert { background: #e8feee; color: #2d7d46; }
-
-    @media (max-width: 900px) {
-      .intro-section { grid-template-columns: 1fr; }
-      .intro-col:first-child { border-right: none; border-bottom: 1px solid var(--cream-mid); }
-      .skills-grid { grid-template-columns: repeat(2, 1fr); }
-    }
-    @media (max-width: 600px) {
-      .skills-grid { grid-template-columns: 1fr; }
-      .about-hero::after { display: none; }
-      .timeline::before { left: 70px; }
-      .tl-item { grid-template-columns: 70px 1fr; }
-      .tl-year-col { padding-right: 16px; }
-    }
-  </style>
+  <link rel="stylesheet" href="../assets/css/global.css"/>
+  <link rel="stylesheet" href="../assets/css/about.css"/>
+  <link rel="stylesheet" href="../assets/css/responsive.css"/>
 </head>
 <body>
 
 <nav class="navbar">
-  
   <ul class="nav-links">
     <li><a href="../index.html">Anasayfa</a></li>
     <li><a href="about.html">Hakkımda</a></li>
     <li><a href="Projects.html">Projeler</a></li>
     <li><a href="contact.html">İletişim</a></li>
   </ul>
+  <button class="nav-toggle" aria-label="Menü">
+    <span></span><span></span><span></span>
+  </button>
   <div class="nav-cta">
     <a href="contact.html" class="btn-nav">İletişime Geç</a>
   </div>
@@ -239,6 +27,7 @@
 
 <div class="page-wrap">
 
+  <!-- SAYFA BAŞLIĞI -->
   <div class="about-hero">
     <div class="section-label anim-fadein">Hakkımda</div>
     <h1 class="anim-fadeup anim-delay-1">
@@ -247,13 +36,14 @@
     </h1>
   </div>
 
+  <!-- KİM OLDUĞUM -->
   <div class="intro-section">
     <div class="intro-col reveal">
       <h2>Kim <em>olduğum</em></h2>
       <p>
-        <strong>Kırşehir Ahi Evran Üniversitesi</strong> Bilgisayar Programcılığı 2. sınıf öğrencisiyim. 
-        Yazılım benim için sadece okuduğum bölüm değil; fikirleri koda, kodları çalışan sistemlere dönüştürdüğüm bir tutku. 
-        Özellikle web geliştirme alanında ilerliyorum.
+        <strong>Kırşehir Ahi Evran Üniversitesi</strong> Bilgisayar Programcılığı
+        bölümünde 2. sınıf öğrencisiyim. Yazılım benim için sadece okuduğum bölüm değil;
+        fikirleri koda, kodları çalışan sistemlere dönüştürdüğüm bir tutku.
       </p>
       <p>
         Özellikle web tarafına ilgim var. Bir şeyi tasarlayıp tarayıcıda
@@ -265,36 +55,41 @@
     <div class="intro-col reveal">
       <h2>Ne <em>yapıyorum</em></h2>
       <p>
-        Ağırlıklı olarak Full-Stack web projeleri üzerine çalışıyorum. Yakın zamanda bir personel takip programı tamamladım, 
-        şu an ise dinamik bir e-ticaret sitesi tasarlıyorum. 
-        Projelerimi HTML, CSS, JS, PHP ve MySQL kullanarak hayata geçiriyorum.
+        Ağırlıklı olarak Full-Stack web projeleri üzerine çalışıyorum.
+        Yakın zamanda bir personel takip programı tamamladım, şu an ise
+        dinamik bir e-ticaret sitesi tasarlıyorum.
       </p>
-      <div style="margin-top:32px; display:flex; gap:12px; flex-wrap:wrap;">
+      <p>
+        Projelerimi <strong>HTML, CSS, JavaScript, PHP</strong> ve
+        <strong>MySQL</strong> kullanarak hayata geçiriyorum.
+      </p>
+      <div class="intro-actions">
         <a href="Projects.html" class="btn-primary">Projelerimi Gör →</a>
         <a href="contact.html" class="btn-secondary">İletişim</a>
       </div>
     </div>
   </div>
 
+  <!-- YETENEKLEr -->
   <section class="skills-section">
     <div class="section-label">Yetenekler</div>
-    <h2 style="font-family:var(--font-display); font-size:clamp(2rem,3.5vw,3rem); font-weight:400; letter-spacing:-1px; margin-top:4px;">
-      Kullandığım <em style="font-style:italic; color:var(--accent)">araçlar</em>
-    </h2>
-
+    <h2 class="skills-heading">Kullandığım <em>araçlar</em></h2>
     <div class="skills-grid reveal">
+
       <div class="skill-card">
         <span class="skill-icon">🌐</span>
         <h3>HTML & CSS</h3>
         <p>Semantik yapı, responsive tasarım, animasyon.</p>
         <div class="skill-level"><div class="skill-level-fill" style="width:92%"></div></div>
       </div>
+
       <div class="skill-card">
         <span class="skill-icon">⚡</span>
         <h3>JavaScript</h3>
         <p>ES6+, DOM manipülasyonu, API entegrasyonu.</p>
-        <div class="skill-level"><div class="skill-level-fill" style="width:80%"></div></div>
+        <div class="skill-level"><div class="skill-level-fill" style="width:75%"></div></div>
       </div>
+
       <div class="skill-card">
         <span class="skill-icon">
           <svg viewBox="0 0 128 128" width="36" height="36" xmlns="http://www.w3.org/2000/svg">
@@ -303,29 +98,47 @@
           </svg>
         </span>
         <h3>PHP</h3>
-        <p>Sunucu taraflı web geliştirme, form işlemleri, dinamik sayfa üretimi.</p>
+        <p>Sunucu taraflı geliştirme, form işlemleri, dinamik sayfalar.</p>
         <div class="skill-level"><div class="skill-level-fill" style="width:68%"></div></div>
       </div>
+
       <div class="skill-card">
         <span class="skill-icon">🐬</span>
         <h3>MySQL</h3>
-        <p>Veri tabanı tasarımı, tablo ilişkileri, temel SQL sorguları.</p>
+        <p>Veritabanı tasarımı, tablo ilişkileri, SQL sorguları.</p>
         <div class="skill-level"><div class="skill-level-fill" style="width:70%"></div></div>
       </div>
+
       <div class="skill-card">
         <span class="skill-icon">🗃️</span>
         <h3>SQL</h3>
         <p>Veritabanı tasarımı, sorgular, ilişkisel veri.</p>
         <div class="skill-level"><div class="skill-level-fill" style="width:65%"></div></div>
       </div>
+
       <div class="skill-card">
         <span class="skill-icon">🔧</span>
         <h3>Git & GitHub</h3>
         <p>Versiyon kontrolü, dallanma, iş birliği.</p>
         <div class="skill-level"><div class="skill-level-fill" style="width:75%"></div></div>
       </div>
+
     </div>
   </section>
+
+      <div class="tl-item">
+        <div class="tl-year-col"><span class="tl-year">2021</span></div>
+        <div class="tl-content-col">
+          <strong>Lise Mezuniyeti</strong>
+          <div class="tl-place">[Lise Adı]</div>
+          <p class="tl-desc">Lise eğitimimi tamamladım ve üniversite sürecine başladım.</p>
+          <span class="tl-badge badge-edu">Eğitim</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
   <footer>
     <div class="footer-logo">Anıl Berk Keskin<span>.</span></div>
     <ul class="footer-links">
@@ -336,6 +149,7 @@
     </ul>
     <div class="footer-copy">© 2026 Anıl Berk Keskin. Tüm hakları saklıdır.</div>
   </footer>
+
 </div>
 
 <script src="../assets/js/main.js"></script>
