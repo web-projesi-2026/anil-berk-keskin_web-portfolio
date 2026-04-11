@@ -1,0 +1,155 @@
+/* =========================================
+   responsive.css — Tüm @media kuralları
+   
+   Breakpoint'ler:
+   900px → Tablet (2 sütun → 1 sütun)
+   560px → Mobil (hamburger menü açılır)
+   480px → Küçük mobil
+   ========================================= */
+
+/* ── TABLET: 900px ──────────────────────── */
+@media (max-width: 900px) {
+
+  /* Navbar */
+  .navbar { padding: 0 24px; gap: 16px; }
+  .nav-cta { display: none; }
+
+  /* Footer */
+  footer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 36px 24px;
+  }
+  .footer-links { flex-wrap: wrap; gap: 12px; }
+
+  /* index.html */
+  .hero { grid-template-columns: 1fr; }
+  .hero-right { display: none; }
+  .featured-grid { grid-template-columns: 1fr; }
+  .featured-header { flex-direction: column; align-items: flex-start; gap: 20px; }
+
+  /* hakkimda.html */
+  .intro-section { grid-template-columns: 1fr; }
+  .intro-col:first-child {
+    border-right: none;
+    border-bottom: 1px solid var(--cream-mid);
+  }
+  .skills-grid { grid-template-columns: repeat(2, 1fr); }
+
+  /* iletisim.html */
+  .contact-layout { grid-template-columns: 1fr; }
+  .contact-info {
+    border-right: none;
+    border-bottom: 1px solid var(--cream-mid);
+    padding: 48px 28px;
+  }
+  .contact-form-wrap { padding: 48px 28px; }
+
+  /* projeler.html */
+  .projects-hero { padding: 56px 28px 40px; }
+  .projects-hero::after { display: none; }
+  .projects-section { padding: 48px 28px; }
+  .projects-grid--two { grid-template-columns: 1fr; max-width: 520px; }
+  .cta-strip { padding: 56px 28px; flex-direction: column; text-align: center; }
+}
+
+/* ── MOBİL: 560px — Hamburger menü ─────── */
+@media (max-width: 560px) {
+
+  .navbar { padding: 0 20px; justify-content: space-between; }
+
+  /* Hamburger butonu göster */
+  .nav-toggle { display: flex; }
+
+  /* Nav linkleri → kompakt açılır panel */
+  .nav-links {
+    display: none;
+    position: fixed;
+    top: var(--nav-h);
+    left: 0;
+    right: 0;
+    background: rgba(250,250,248,0.97);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 16px 20px 18px;
+    border-bottom: 1px solid var(--cream-mid);
+    box-shadow: 0 8px 24px rgba(44,40,32,0.08);
+    z-index: 998;
+  }
+  .nav-links.open { display: flex; }
+
+  .nav-links li { width: auto; }
+  .nav-links a {
+    font-size: 0.875rem;
+    font-weight: 500;
+    padding: 8px 20px;
+    width: auto;
+    text-align: center;
+    border-radius: 50px;
+    color: var(--ink);
+    border: 1.5px solid var(--cream-dark);
+    background: var(--white);
+    display: inline-block;
+  }
+  .nav-links a:hover {
+    border-color: var(--accent);
+    background: var(--accent-pale);
+    color: var(--ink);
+  }
+  .nav-links a.active {
+    background: var(--ink);
+    border-color: var(--ink);
+    color: var(--white);
+    font-weight: 600;
+  }
+}
+
+/* ── KÜÇÜK MOBİL: 480px ─────────────────── */
+@media (max-width: 480px) {
+
+  /* index.html */
+  .hero-left { padding: 40px 20px; }
+  .hero-title { letter-spacing: -1.5px; }
+  .hero-actions { flex-direction: column; gap: 10px; }
+  .hero-actions a { text-align: center; justify-content: center; width: 100%; }
+  .featured { padding: 52px 20px; }
+  .feat-card { padding: 24px 20px; }
+
+  /* hakkimda.html */
+  .about-hero { padding: 44px 20px 32px; }
+  .about-hero::after { display: none; }
+  .intro-col { padding: 36px 20px; }
+  .intro-actions { flex-direction: column; }
+  .intro-actions a { text-align: center; justify-content: center; }
+  .skills-section { padding: 48px 20px; }
+  .skills-grid { grid-template-columns: 1fr; }
+  .timeline-section { padding: 48px 20px; }
+  .timeline::before { left: 64px; }
+  .tl-item { grid-template-columns: 64px 1fr; }
+  .tl-year-col { padding-right: 12px; }
+  .tl-content-col { padding-left: 24px; }
+
+  /* iletisim.html */
+  .contact-hero { padding: 44px 20px 32px; }
+  .contact-hero::after { display: none; }
+  .contact-info { padding: 36px 20px; }
+  .contact-form-wrap { padding: 36px 20px; }
+  .form-row { grid-template-columns: 1fr; }
+  .form-submit-row { flex-direction: column; align-items: stretch; }
+
+  /* projeler.html */
+  .projects-hero { padding: 44px 20px 32px; }
+  .card-thumb { height: 170px; }
+  .card-body { padding: 18px 18px 16px; }
+  .projects-grid--two { max-width: 100%; }
+
+  /* Footer */
+  footer { padding: 32px 20px; }
+  .footer-copy { font-size: 0.72rem; }
+}
