@@ -41,17 +41,29 @@ Bu projenin geliştirilmesinde aşağıdaki teknolojilerden faydalanılmıştır
 
 ```text
 Anil_Berk_Keskin-Web_Portfolio/
-├── index.html
-├── README.md
 ├── assets/
 │   ├── css/
+│   │   ├── about.css
+│   │   ├── contact.css
+│   │   ├── global.css
+│   │   ├── projects.css
+│   │   ├── responsive.css
 │   │   └── style.css
-│   └── js/
-│       └── main.js
-└── pages/
-    ├── Projects.html
-    ├── about.html
-    └── contact.html
+│   ├── js/
+│   │   └── main.js
+│   └── images/
+│       ├── PersonelTakip1.png
+│       ├── PersonelTakip2.png
+│       ├── PersonelTakip3.png
+│       ├── Anilklise1.png.png
+│       ├── Anilklise2.png.png
+│       └── Anilklise3.png.png
+├── pages/
+│   ├── Projects.html
+│   ├── about.html
+│   └── contact.html
+├── README.md
+└── index.html
 ```
 ---
 📌 Bana Ulaşın
