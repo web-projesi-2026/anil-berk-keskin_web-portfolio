@@ -1,0 +1,264 @@
+/* =========================================
+   projects.css — projeler.html sayfa stilleri
+   ========================================= */
+
+.projects-hero {
+  padding: 80px var(--page-pad) 60px;
+  background: var(--white);
+  border-bottom: 1px solid var(--cream-mid);
+  position: relative;
+  overflow: hidden;
+}
+.projects-hero::after {
+  content: 'Projeler';
+  position: absolute;
+  right: var(--page-pad);
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: var(--font-display);
+  font-size: clamp(5rem, 12vw, 14rem);
+  font-weight: 600;
+  color: var(--cream);
+  pointer-events: none;
+  white-space: nowrap;
+  line-height: 1;
+  letter-spacing: -4px;
+}
+.projects-hero h1 {
+  font-family: var(--font-display);
+  font-size: clamp(2.8rem, 5vw, 5rem);
+  font-weight: 300;
+  letter-spacing: -2px;
+  line-height: 1.1;
+  position: relative;
+  z-index: 1;
+}
+.projects-hero h1 em { font-style: italic; color: var(--accent); }
+.projects-hero p {
+  margin-top: 16px;
+  font-size: 1rem;
+  color: var(--warm-gray);
+  max-width: 480px;
+  font-weight: 300;
+  position: relative;
+  z-index: 1;
+}
+
+/* ── PROJE GRID ─────────────────────────── */
+.projects-section {
+  padding: 64px var(--page-pad);
+  background: var(--off-white);
+}
+.projects-grid--two {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.project-card {
+  background: var(--white);
+  border: 1px solid var(--cream-mid);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  transition: transform var(--transition), box-shadow var(--transition);
+  display: flex;
+  flex-direction: column;
+}
+.project-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-lg);
+}
+
+/* ── SLIDER ─────────────────────────────── */
+.card-thumb {
+  height: 200px;
+  position: relative;
+  overflow: hidden;
+}
+.thumb-1 { background: #fef6ee; }
+.thumb-4 { background: #f5f3ff; }
+
+.slider {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+.slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.7s ease;
+}
+.slide.active { opacity: 1; }
+.slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+  display: block;
+}
+
+.slider-dots {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 6px;
+  z-index: 3;
+}
+.slider-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.5);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: none;
+  padding: 0;
+}
+.slider-dot.active {
+  background: var(--white);
+  transform: scale(1.3);
+}
+
+.slider-prev,
+.slider-next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 3;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.85);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  font-size: 14px;
+  color: var(--ink);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+.slider-prev { left: 10px; }
+.slider-next { right: 10px; }
+.card-thumb:hover .slider-prev,
+.card-thumb:hover .slider-next { opacity: 1; }
+
+.card-num {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  z-index: 4;
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: rgba(255,255,255,0.85);
+  letter-spacing: 1px;
+  background: rgba(44,40,32,0.22);
+  padding: 2px 8px;
+  border-radius: 4px;
+  backdrop-filter: blur(4px);
+}
+
+/* ── KART İÇERİK ────────────────────────── */
+.card-body {
+  padding: 28px 28px 24px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+.card-body h3 {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  font-weight: 600;
+  letter-spacing: -0.4px;
+  margin-bottom: 10px;
+  color: var(--ink);
+}
+.card-body p {
+  font-size: 0.875rem;
+  color: var(--warm-gray);
+  line-height: 1.75;
+  flex: 1;
+  margin-bottom: 20px;
+  font-weight: 300;
+}
+.card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 16px;
+  border-top: 1px solid var(--cream-mid);
+}
+.card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+.card-tag {
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: var(--accent-hover);
+  background: var(--accent-pale);
+  padding: 3px 9px;
+  border-radius: 4px;
+}
+.card-link {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--ink);
+  text-decoration: none;
+  transition: color var(--transition);
+  white-space: nowrap;
+}
+.card-link:hover { color: var(--accent); }
+
+/* ── CTA STRIP ──────────────────────────── */
+.cta-strip {
+  padding: 80px var(--page-pad);
+  background: var(--ink);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+  flex-wrap: wrap;
+}
+.cta-strip h2 {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 3vw, 2.8rem);
+  font-weight: 300;
+  color: var(--white);
+  letter-spacing: -0.8px;
+}
+.cta-strip h2 em { font-style: italic; color: var(--accent); }
+.btn-cta-light {
+  background: var(--white);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 14px 36px;
+  border-radius: 50px;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  white-space: nowrap;
+  transition: all var(--transition);
+}
+.btn-cta-light:hover {
+  background: var(--accent);
+  color: var(--white);
+  transform: translateY(-2px);
+}
