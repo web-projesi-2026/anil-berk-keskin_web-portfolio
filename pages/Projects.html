@@ -4,253 +4,22 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Projeler — Anıl Berk Keskin</title>
-  <link rel="stylesheet" href="../assets/css/style.css"/>
-  <style>
-    .projects-hero {
-      padding: 80px var(--page-pad) 60px;
-      background: var(--white);
-      border-bottom: 1px solid var(--cream-mid);
-      position: relative;
-      overflow: hidden;
-    }
-    .projects-hero::after {
-      content: 'Projeler';
-      position: absolute;
-      right: var(--page-pad);
-      top: 50%;
-      transform: translateY(-50%);
-      font-family: var(--font-display);
-      font-size: clamp(5rem, 12vw, 14rem);
-      font-weight: 600;
-      color: var(--cream);
-      pointer-events: none;
-      white-space: nowrap;
-      line-height: 1;
-      letter-spacing: -4px;
-    }
-    .projects-hero h1 {
-      font-family: var(--font-display);
-      font-size: clamp(2.8rem, 5vw, 5rem);
-      font-weight: 300;
-      letter-spacing: -2px;
-      line-height: 1.1;
-      position: relative; z-index: 1;
-    }
-    .projects-hero h1 em { font-style: italic; color: var(--accent); }
-    .projects-hero h1 strong { font-weight: 600; }
-    .projects-hero p {
-      margin-top: 16px;
-      font-size: 1rem;
-      color: var(--warm-gray);
-      max-width: 480px;
-      font-weight: 300;
-      position: relative; z-index: 1;
-    }
-
-    .filter-bar {
-      padding: 24px var(--page-pad);
-      background: var(--off-white);
-      border-bottom: 1px solid var(--cream-mid);
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-    .filter-label {
-      font-size: 0.75rem;
-      font-weight: 600;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      color: var(--warm-gray);
-      margin-right: 8px;
-    }
-    .filter-btn {
-      padding: 7px 18px;
-      border-radius: 50px;
-      border: 1.5px solid var(--cream-dark);
-      background: transparent;
-      font-family: var(--font-body);
-      font-size: 0.82rem;
-      font-weight: 500;
-      color: var(--ink-light);
-      cursor: pointer;
-      transition: all var(--transition);
-    }
-    .filter-btn:hover { border-color: var(--ink); color: var(--ink); }
-    .filter-btn.active {
-      background: var(--ink);
-      border-color: var(--ink);
-      color: var(--white);
-    }
-
-    .projects-section {
-      padding: 64px var(--page-pad);
-      background: var(--off-white);
-    }
-    .projects-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
-    }
-
-    .project-card {
-      background: var(--white);
-      border: 1px solid var(--cream-mid);
-      border-radius: var(--radius-md);
-      overflow: hidden;
-      transition: transform var(--transition), box-shadow var(--transition);
-      display: flex;
-      flex-direction: column;
-    }
-    .project-card:hover {
-      transform: translateY(-6px);
-      box-shadow: var(--shadow-lg);
-    }
-
-    .card-thumb {
-      height: 160px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 3.5rem;
-      position: relative;
-      overflow: hidden;
-    }
-    .thumb-1 { background: linear-gradient(135deg, #fef3e8, #fde8d0); }
-    .thumb-2 { background: linear-gradient(135deg, #e8f4fe, #d0e8fd); }
-    .thumb-3 { background: linear-gradient(135deg, #e8feee, #d0fde0); }
-    .thumb-4 { background: linear-gradient(135deg, #fde8fe, #f0d0fd); }
-    .thumb-5 { background: linear-gradient(135deg, #feede8, #fdddd0); }
-    .thumb-6 { background: linear-gradient(135deg, #f0fee8, #e0fdd0); }
-
-    .card-num {
-      position: absolute;
-      top: 16px; right: 20px;
-      font-family: var(--font-display);
-      font-size: 0.85rem;
-      font-weight: 600;
-      color: rgba(44,40,32,0.2);
-      letter-spacing: 1px;
-    }
-
-    .card-body {
-      padding: 28px 28px 24px;
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-    }
-    .card-body h3 {
-      font-family: var(--font-display);
-      font-size: 1.3rem;
-      font-weight: 600;
-      letter-spacing: -0.4px;
-      margin-bottom: 10px;
-      color: var(--ink);
-    }
-    .card-body p {
-      font-size: 0.875rem;
-      color: var(--warm-gray);
-      line-height: 1.75;
-      flex: 1;
-      margin-bottom: 20px;
-      font-weight: 300;
-    }
-    .card-footer {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding-top: 16px;
-      border-top: 1px solid var(--cream-mid);
-    }
-    .card-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 5px;
-    }
-    .card-tag {
-      font-size: 0.68rem;
-      font-weight: 600;
-      letter-spacing: 0.8px;
-      text-transform: uppercase;
-      color: var(--accent-hover);
-      background: var(--accent-pale);
-      padding: 3px 9px;
-      border-radius: 4px;
-    }
-    .card-link {
-      display: flex;
-      align-items: center;
-      gap: 4px;
-      font-size: 0.78rem;
-      font-weight: 600;
-      color: var(--ink);
-      text-decoration: none;
-      transition: color var(--transition);
-      white-space: nowrap;
-    }
-    .card-link:hover { color: var(--accent); }
-
-    .cta-strip {
-      padding: 80px var(--page-pad);
-      background: var(--ink);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 32px;
-      flex-wrap: wrap;
-    }
-    .cta-strip h2 {
-      font-family: var(--font-display);
-      font-size: clamp(1.8rem, 3vw, 2.8rem);
-      font-weight: 300;
-      color: var(--white);
-      letter-spacing: -0.8px;
-    }
-    .cta-strip h2 em { font-style: italic; color: var(--accent); }
-    .btn-cta-light {
-      background: var(--white);
-      color: var(--ink);
-      font-family: var(--font-body);
-      font-size: 0.9rem;
-      font-weight: 600;
-      padding: 14px 36px;
-      border-radius: 50px;
-      border: none;
-      cursor: pointer;
-      text-decoration: none;
-      display: inline-block;
-      white-space: nowrap;
-      transition: all var(--transition);
-    }
-    .btn-cta-light:hover {
-      background: var(--accent);
-      color: var(--white);
-      transform: translateY(-2px);
-    }
-
-    .projects-grid--two {
-      grid-template-columns: repeat(2, 1fr);
-      max-width: 900px;
-      margin: 0 auto;
-    }
-    .projects-grid--two .card-thumb {
-      height: 200px;
-    }
-    @media (max-width: 640px) {
-      .projects-grid--two { grid-template-columns: 1fr; }
-    }
-  </style>
+  <link rel="stylesheet" href="../assets/css/global.css"/>
+  <link rel="stylesheet" href="../assets/css/projects.css"/>
+  <link rel="stylesheet" href="../assets/css/responsive.css"/>
 </head>
 <body>
 
 <nav class="navbar">
-  
   <ul class="nav-links">
     <li><a href="../index.html">Anasayfa</a></li>
     <li><a href="about.html">Hakkımda</a></li>
     <li><a href="Projects.html">Projeler</a></li>
     <li><a href="contact.html">İletişim</a></li>
   </ul>
+  <button class="nav-toggle" aria-label="Menü">
+    <span></span><span></span><span></span>
+  </button>
   <div class="nav-cta">
     <a href="contact.html" class="btn-nav">İletişime Geç</a>
   </div>
@@ -258,6 +27,7 @@
 
 <div class="page-wrap">
 
+  <!-- SAYFA BAŞLIĞI -->
   <div class="projects-hero">
     <div class="section-label anim-fadein">Projeler</div>
     <h1 class="anim-fadeup anim-delay-1">
@@ -270,17 +40,34 @@
     </p>
   </div>
 
+  <!-- PROJELER -->
   <section class="projects-section">
-    <div class="projects-grid projects-grid--two">
+    <div class="projects-grid--two">
 
-      <div class="project-card reveal" data-cat="fullstack">
+      <!-- E-TİCARET -->
+      <div class="project-card reveal">
         <div class="card-thumb thumb-1">
-          🛒
           <span class="card-num">01</span>
+          <div class="slider" data-interval="5000">
+            <div class="slide active">
+              <img src="../images/Anilklise1.png" alt="E-Ticaret ekran 1"/>
+            </div>
+            <div class="slide">
+              <img src="../images/Anilklise1.png" alt="E-Ticaret ekran 2"/>
+            </div>
+            <div class="slide">
+              <img src="../images/Anilklise1.png" alt="E-Ticaret ekran 3"/>
+            </div>
+            <div class="slider-dots"></div>
+            <button class="slider-prev" aria-label="Önceki">&#8249;</button>
+            <button class="slider-next" aria-label="Sonraki">&#8250;</button>
+          </div>
         </div>
         <div class="card-body">
           <h3>E-Ticaret Sitesi</h3>
-          <p>Kullanıcıların ürün listeleyebildiği, sepete ekleme yapabildiği ve sipariş oluşturabildiği tam işlevli bir alışveriş sitesi. PHP ve MySQL ile dinamik ürün yönetimi, oturum tabanlı sepet sistemi içeriyor.</p>
+          <p>Kullanıcıların ürün listeleyebildiği, sepete ekleme yapabildiği ve sipariş
+          oluşturabildiği tam işlevli bir alışveriş sitesi. PHP ve MySQL ile dinamik
+          ürün yönetimi, oturum tabanlı sepet sistemi içeriyor.</p>
           <div class="card-footer">
             <div class="card-tags">
               <span class="card-tag">HTML</span>
@@ -293,14 +80,30 @@
         </div>
       </div>
 
-      <div class="project-card reveal" data-cat="fullstack">
+      <!-- PERSONEL TAKİP -->
+      <div class="project-card reveal">
         <div class="card-thumb thumb-4">
-          👥
           <span class="card-num">02</span>
+          <div class="slider" data-interval="5000">
+            <div class="slide active">
+              <img src="../images/PersonelTakip1.png" alt="Personel Takip ekran 1"/>
+            </div>
+            <div class="slide">
+              <img src="../images/Persone2Takip1.png" alt="Personel Takip ekran 2"/>
+            </div>
+            <div class="slide">
+              <img src="../images/Persone3Takip1.png" alt="Personel Takip ekran 3"/>
+            </div>
+            <div class="slider-dots"></div>
+            <button class="slider-prev" aria-label="Önceki">&#8249;</button>
+            <button class="slider-next" aria-label="Sonraki">&#8250;</button>
+          </div>
         </div>
         <div class="card-body">
           <h3>Personel Takip Programı</h3>
-          <p>Şirket çalışanlarının bilgilerini, izin durumlarını ve mesai saatlerini yönetmeye yarayan web tabanlı bir uygulama. Yönetici ve çalışan rolleri ayrı ayrı tanımlanmış, veritabanı üzerinden kayıt işlemleri yapılıyor.</p>
+          <p>Şirket çalışanlarının bilgilerini, izin durumlarını ve mesai saatlerini
+          yönetmeye yarayan web tabanlı bir uygulama. Yönetici ve çalışan rolleri
+          ayrı ayrı tanımlanmış, veritabanı üzerinden kayıt işlemleri yapılıyor.</p>
           <div class="card-footer">
             <div class="card-tags">
               <span class="card-tag">HTML</span>
@@ -308,7 +111,7 @@
               <span class="card-tag">PHP</span>
               <span class="card-tag">MySQL</span>
             </div>
-            <a href="#" class="card-link">GitHub →</a>
+            <a href="https://github.com/AnilBerkKeskin" class="card-link" target="_blank">GitHub →</a>
           </div>
         </div>
       </div>
@@ -316,6 +119,7 @@
     </div>
   </section>
 
+  <!-- CTA -->
   <div class="cta-strip">
     <h2>Birlikte <em>çalışalım</em> mı?</h2>
     <a href="contact.html" class="btn-cta-light">İletişime Geç →</a>
@@ -331,6 +135,7 @@
     </ul>
     <div class="footer-copy">© 2026 Anıl Berk Keskin. Tüm hakları saklıdır.</div>
   </footer>
+
 </div>
 
 <script src="../assets/js/main.js"></script>
