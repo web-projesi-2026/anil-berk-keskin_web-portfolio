@@ -195,21 +195,143 @@ document.addEventListener('DOMContentLoaded', () => {
     startTimer();
   }
 
-  /* ── İletişim formu ─────────────────────── */
-  const sendBtn = document.getElementById('sendBtn');
-  if (sendBtn) {
-    sendBtn.addEventListener('click', () => {
-      const msg = document.getElementById('successMsg');
-      sendBtn.textContent = '✓ Gönderildi!';
-      sendBtn.classList.add('sent');
+  /* ── İletişim formu — validasyon + Formspree ── */
+  const contactForm = document.getElementById('contactForm');
+  if (contactForm) {
+
+    // ── Yardımcı fonksiyonlar ──────────────────
+    function showError(inputEl, errorId, msg) {
+      inputEl.classList.add('error');
+      inputEl.classList.remove('valid');
+      const errEl = document.getElementById(errorId);
+      if (errEl) { errEl.textContent = msg; errEl.classList.add('visible'); }
+    }
+
+    function showValid(inputEl, errorId) {
+      inputEl.classList.remove('error');
+      inputEl.classList.add('valid');
+      const errEl = document.getElementById(errorId);
+      if (errEl) errEl.classList.remove('visible');
+    }
+
+    function clearState(inputEl, errorId) {
+      inputEl.classList.remove('error', 'valid');
+      const errEl = document.getElementById(errorId);
+      if (errEl) errEl.classList.remove('visible');
+    }
+
+    function isValidEmail(val) {
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val.trim());
+    }
+
+    // ── Alanları doğrula ───────────────────────
+    function validateField(input) {
+      const id   = input.id;
+      const val  = input.value.trim();
+      const errId = 'err-' + id;
+
+      if (id === 'fname') {
+        if (!val) { showError(input, errId, 'Ad alanı boş bırakılamaz.'); return false; }
+        if (val.length < 2) { showError(input, errId, 'Ad en az 2 karakter olmalıdır.'); return false; }
+      }
+      if (id === 'lname') {
+        if (!val) { showError(input, errId, 'Soyad alanı boş bırakılamaz.'); return false; }
+        if (val.length < 2) { showError(input, errId, 'Soyad en az 2 karakter olmalıdır.'); return false; }
+      }
+      if (id === 'email') {
+        if (!val) { showError(input, errId, 'E-posta alanı boş bırakılamaz.'); return false; }
+        if (!isValidEmail(val)) { showError(input, errId, 'Geçerli bir e-posta adresi girin. (örn: ad@mail.com)'); return false; }
+      }
+      if (id === 'subject') {
+        if (!val) { showError(input, errId, 'Lütfen bir konu seçin.'); return false; }
+      }
+      if (id === 'message') {
+        if (!val) { showError(input, errId, 'Mesaj alanı boş bırakılamaz.'); return false; }
+        if (val.length < 10) { showError(input, errId, 'Mesaj en az 10 karakter olmalıdır.'); return false; }
+      }
+
+      showValid(input, errId);
+      return true;
+    }
+
+    // ── Anlık doğrulama (blur olunca) ─────────
+    ['fname','lname','email','subject','message'].forEach(id => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      el.addEventListener('blur', () => validateField(el));
+      el.addEventListener('input', () => {
+        // Hata varken düzeltince anında temizle
+        if (el.classList.contains('error')) validateField(el);
+      });
+    });
+
+    // ── Form submit ────────────────────────────
+    contactForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      const fields = ['fname','lname','email','subject','message'];
+      let allValid = true;
+
+      fields.forEach(id => {
+        const el = document.getElementById(id);
+        if (el && !validateField(el)) allValid = false;
+      });
+
+      if (!allValid) {
+        // İlk hatalı alana odaklan
+        const firstError = contactForm.querySelector('.error');
+        if (firstError) firstError.focus();
+        return;
+      }
+
+      // ── EmailJS ile gönder ──────────────────
+      const sendBtn    = document.getElementById('sendBtn');
+      const successMsg = document.getElementById('successMsg');
+
+      sendBtn.textContent = 'Gönderiliyor...';
+      sendBtn.classList.add('loading');
       sendBtn.disabled = true;
-      if (msg) { msg.classList.add('visible'); msg.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }
-      setTimeout(() => {
-        sendBtn.textContent = 'Mesajı Gönder →';
-        sendBtn.classList.remove('sent');
-        sendBtn.disabled = false;
-        if (msg) msg.classList.remove('visible');
-      }, 5000);
+
+      const templateParams = {
+        ad:     document.getElementById('fname').value.trim(),
+        soyad:  document.getElementById('lname').value.trim(),
+        email:  document.getElementById('email').value.trim(),
+        konu:   document.getElementById('subject').value,
+        mesaj:  document.getElementById('message').value.trim(),
+        name:   document.getElementById('fname').value.trim() + ' ' + document.getElementById('lname').value.trim()
+      };
+
+      emailjs.send('service_jtzou9i', 'template_iu4mmul', templateParams)
+        .then(() => {
+          sendBtn.textContent = '✓ Gönderildi!';
+          sendBtn.classList.remove('loading');
+          sendBtn.classList.add('sent');
+          if (successMsg) {
+            successMsg.classList.add('visible');
+            successMsg.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+          }
+          contactForm.reset();
+          fields.forEach(id => {
+            const el = document.getElementById(id);
+            if (el) clearState(el, 'err-' + id);
+          });
+          setTimeout(() => {
+            sendBtn.textContent = 'Mesajı Gönder →';
+            sendBtn.classList.remove('sent');
+            sendBtn.disabled = false;
+            if (successMsg) successMsg.classList.remove('visible');
+          }, 6000);
+        })
+        .catch(() => {
+          sendBtn.textContent = '✗ Hata oluştu, tekrar dene';
+          sendBtn.classList.remove('loading');
+          sendBtn.classList.add('error-state');
+          sendBtn.disabled = false;
+          setTimeout(() => {
+            sendBtn.textContent = 'Mesajı Gönder →';
+            sendBtn.classList.remove('error-state');
+          }, 4000);
+        });
     });
   }
 
