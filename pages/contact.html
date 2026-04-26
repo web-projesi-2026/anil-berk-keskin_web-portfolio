@@ -92,46 +92,57 @@
       <div class="section-label">Mesaj</div>
       <h2>Mesaj Gönder</h2>
 
+      <!-- Başarı mesajı -->
       <div class="success-msg" id="successMsg">
         ✅ Mesajın başarıyla gönderildi! En kısa sürede dönüş yapacağım.
       </div>
 
-      <div class="form-row">
-        <div class="form-group">
-          <label for="fname">Ad</label>
-          <input type="text" id="fname" placeholder="Adınız"/>
+      <!-- Form — action'a kendi Formspree ID'ni yaz -->
+      <form id="contactForm" novalidate>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="fname">Ad <span style="color:var(--accent)">*</span></label>
+            <input type="text" id="fname" name="ad" placeholder="Adınız" required/>
+            <span class="field-error" id="err-fname">Ad alanı boş bırakılamaz.</span>
+          </div>
+          <div class="form-group">
+            <label for="lname">Soyad <span style="color:var(--accent)">*</span></label>
+            <input type="text" id="lname" name="soyad" placeholder="Soyadınız" required/>
+            <span class="field-error" id="err-lname">Soyad alanı boş bırakılamaz.</span>
+          </div>
         </div>
+
         <div class="form-group">
-          <label for="lname">Soyad</label>
-          <input type="text" id="lname" placeholder="Soyadınız"/>
+          <label for="email">E-posta <span style="color:var(--accent)">*</span></label>
+          <input type="email" id="email" name="email" placeholder="email@ornek.com" required/>
+          <span class="field-error" id="err-email">Geçerli bir e-posta adresi girin.</span>
         </div>
-      </div>
 
-      <div class="form-group">
-        <label for="email">E-posta</label>
-        <input type="email" id="email" placeholder="email@ornek.com"/>
-      </div>
+        <div class="form-group">
+          <label for="subject">Konu <span style="color:var(--accent)">*</span></label>
+          <select id="subject" name="konu" required>
+            <option value="" disabled selected>Konu seçin</option>
+            <option value="Proje İş Birliği">Proje İş Birliği</option>
+            <option value="Freelance Teklif">Freelance Teklif</option>
+            <option value="Genel Soru">Genel Soru</option>
+            <option value="Diğer">Diğer</option>
+          </select>
+          <span class="field-error" id="err-subject">Lütfen bir konu seçin.</span>
+        </div>
 
-      <div class="form-group">
-        <label for="subject">Konu</label>
-        <select id="subject">
-          <option value="" disabled selected>Konu seçin</option>
-          <option>Proje İş Birliği</option>
-          <option>Freelance Teklif</option>
-          <option>Genel Soru</option>
-          <option>Diğer</option>
-        </select>
-      </div>
+        <div class="form-group">
+          <label for="message">Mesaj <span style="color:var(--accent)">*</span></label>
+          <textarea id="message" name="mesaj" placeholder="Mesajınızı buraya yazın..." required></textarea>
+          <span class="field-error" id="err-message">Mesaj alanı boş bırakılamaz.</span>
+        </div>
 
-      <div class="form-group">
-        <label for="message">Mesaj</label>
-        <textarea id="message" placeholder="Mesajınızı buraya yazın..."></textarea>
-      </div>
+        <div class="form-submit-row">
+          <button type="submit" class="btn-send" id="sendBtn">Mesajı Gönder →</button>
+          <p class="form-note">Bilgileriniz üçüncü taraflarla paylaşılmaz.</p>
+        </div>
 
-      <div class="form-submit-row">
-        <button class="btn-send" id="sendBtn">Mesajı Gönder →</button>
-        <p class="form-note">Bilgileriniz üçüncü taraflarla paylaşılmaz.</p>
-      </div>
+      </form>
     </div>
 
   </div>
@@ -149,6 +160,11 @@
 
 </div>
 
+<!-- EmailJS SDK -->
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script>
+  emailjs.init('a9_GmF8rHqaZ4AIj0');
+</script>
 <script src="../assets/js/main.js"></script>
 </body>
 </html>
