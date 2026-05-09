@@ -43,84 +43,26 @@
   </div>
 
   <section class="projects-section">
-    <div class="projects-grid--two">
-
-      <!-- E-TİCARET -->
-      <div class="project-card reveal" data-modal="eticaret">
-        <div class="card-thumb thumb-1">
-          <span class="card-num">01</span>
-          <div class="slider" data-interval="5000">
-            <div class="slide active">
-              <img src="../images/Anilklise1.png" alt="E-Ticaret ekran 1"
-                   onerror="this.src='../images/eticaret-placeholder.svg'"/>
-            </div>
-            <div class="slide">
-              <img src="../images/Anilklise2.png" alt="E-Ticaret ekran 2"
-                   onerror="this.src='../images/eticaret-placeholder.svg'"/>
-            </div>
-            <div class="slide">
-              <img src="../images/Anilklise3.png" alt="E-Ticaret ekran 3"
-                   onerror="this.src='../images/eticaret-placeholder.svg'"/>
-            </div>
-            <div class="slider-dots"></div>
-            <button class="slider-prev" aria-label="Önceki">&#8249;</button>
-            <button class="slider-next" aria-label="Sonraki">&#8250;</button>
-          </div>
-        </div>
-        <div class="card-body">
-          <h3>E-Ticaret Sitesi</h3>
-          <p>PHP ve MySQL ile dinamik ürün yönetimi, oturum tabanlı sepet sistemi.</p>
-          <div class="card-footer">
-            <div class="card-tags">
-              <span class="card-tag">HTML</span>
-              <span class="card-tag">CSS</span>
-              <span class="card-tag">PHP</span>
-              <span class="card-tag">MySQL</span>
-            </div>
-            <span class="card-link">Detaylar →</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- PERSONEL TAKİP -->
-      <div class="project-card reveal" data-modal="personel">
-        <div class="card-thumb thumb-4">
-          <span class="card-num">02</span>
-          <div class="slider" data-interval="5000">
-            <div class="slide active">
-              <img src="../images/PersonelTakip1.png" alt="Personel Takip ekran 1"
-                   onerror="this.src='../images/personel-placeholder.svg'"/>
-            </div>
-            <div class="slide">
-              <img src="../images/PersonelTakip2.png" alt="Personel Takip ekran 2"
-                   onerror="this.src='../images/personel-placeholder.svg'"/>
-            </div>
-            <div class="slide">
-              <img src="../images/PersonelTakip3.png" alt="Personel Takip ekran 3"
-                   onerror="this.src='../images/personel-placeholder.svg'"/>
-            </div>
-            <div class="slider-dots"></div>
-            <button class="slider-prev" aria-label="Önceki">&#8249;</button>
-            <button class="slider-next" aria-label="Sonraki">&#8250;</button>
-          </div>
-        </div>
-        <div class="card-body">
-          <h3>Personel Takip Programı</h3>
-          <p>Yönetici ve çalışan rolleri, izin ve mesai takibi içeren web uygulaması.</p>
-          <div class="card-footer">
-            <div class="card-tags">
-              <span class="card-tag">HTML</span>
-              <span class="card-tag">CSS</span>
-              <span class="card-tag">PHP</span>
-              <span class="card-tag">MySQL</span>
-            </div>
-            <span class="card-link">Detaylar →</span>
-          </div>
-        </div>
-      </div>
-
-    </div>
+    <!-- Kartlar JS tarafından projects.json'dan dinamik üretilir -->
+    <div class="projects-grid--two" id="projectsGrid"></div>
   </section>
+
+  <!-- YÜZEN İNCELEME LİSTESİ -->
+  <div class="inceleme-fab">
+    <div class="inceleme-panel" id="incelemePanel">
+      <div class="inceleme-panel-header">
+        <h4>📋 İnceleme Listem</h4>
+        <button class="inceleme-panel-clear" id="incelemeClear">Temizle</button>
+      </div>
+      <div class="inceleme-panel-body" id="incelemePanelBody">
+        <div class="inceleme-empty">Henüz proje eklemediniz.<br>Kartlardaki butona tıklayın.</div>
+      </div>
+    </div>
+    <button class="inceleme-btn" id="incelemeToggle" aria-label="İnceleme listesi">
+      <svg viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><line x1="9" y1="12" x2="15" y2="12"/><line x1="9" y1="16" x2="13" y2="16"/></svg>
+      <span class="inceleme-count" id="incelemeCount">0</span>
+    </button>
+  </div>
 
   <div class="cta-strip">
     <h2>Birlikte <em>çalışalım</em> mı?</h2>
@@ -140,102 +82,6 @@
 
 </div>
 
-<!-- MODAL: E-TİCARET -->
-<div class="modal-overlay" id="modal-eticaret">
-  <div class="modal">
-    <button class="modal-close" aria-label="Kapat">✕</button>
-    <div class="modal-slider-wrap">
-      <div class="modal-slider">
-        <div class="modal-slide active">
-          <img src="../images/eticaret-placeholder.svg" alt="E-Ticaret ekran 1"
-               onerror="this.src='../images/eticaret-placeholder.svg'"/>
-        </div>
-        <div class="modal-slide">
-          <img src="../images/eticaret-placeholder.svg" alt="E-Ticaret ekran 2"
-               onerror="this.src='../images/eticaret-placeholder.svg'"/>
-        </div>
-        <div class="modal-slide">
-          <img src="../images/eticaret-placeholder.svg" alt="E-Ticaret ekran 3"
-               onerror="this.src='../images/eticaret-placeholder.svg'"/>
-        </div>
-        <div class="modal-slider-dots"></div>
-        <button class="modal-prev">&#8249;</button>
-        <button class="modal-next">&#8250;</button>
-      </div>
-    </div>
-    <div class="modal-content">
-      <div class="modal-num">Proje 01</div>
-      <h2 class="modal-title">E-Ticaret Sitesi</h2>
-      <p class="modal-desc">Kullanıcıların ürün listeleyebildiği, sepete ekleme yapabildiği ve sipariş oluşturabildiği tam işlevli bir alışveriş sitesi. PHP ve MySQL ile geliştirildi.</p>
-      <div class="modal-features">
-        <div class="modal-feature">Dinamik ürün listeleme ve kategori filtreleme</div>
-        <div class="modal-feature">Oturum tabanlı sepet yönetimi</div>
-        <div class="modal-feature">Kullanıcı kayıt ve giriş sistemi</div>
-        <div class="modal-feature">Yönetici paneli ile ürün ekleme/düzenleme</div>
-        <div class="modal-feature">MySQL ile veritabanı entegrasyonu</div>
-      </div>
-      <div class="modal-tags">
-        <span class="modal-tag">HTML</span>
-        <span class="modal-tag">CSS</span>
-        <span class="modal-tag">JavaScript</span>
-        <span class="modal-tag">PHP</span>
-        <span class="modal-tag">MySQL</span>
-      </div>
-      <div class="modal-actions">
-        <a href="https://github.com/AnilBerkKeskin" target="_blank" class="modal-btn-primary">GitHub'da Gör →</a>
-        <a href="#" class="modal-btn-secondary">Canlı Demo</a>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- MODAL: PERSONEL TAKİP -->
-<div class="modal-overlay" id="modal-personel">
-  <div class="modal">
-    <button class="modal-close" aria-label="Kapat">✕</button>
-    <div class="modal-slider-wrap">
-      <div class="modal-slider">
-        <div class="modal-slide active">
-          <img src="../images/personel-placeholder.svg" alt="Personel Takip ekran 1"
-               onerror="this.src='../images/personel-placeholder.svg'"/>
-        </div>
-        <div class="modal-slide">
-          <img src="../images/personel-placeholder.svg" alt="Personel Takip ekran 2"
-               onerror="this.src='../images/personel-placeholder.svg'"/>
-        </div>
-        <div class="modal-slide">
-          <img src="../images/personel-placeholder.svg" alt="Personel Takip ekran 3"
-               onerror="this.src='../images/personel-placeholder.svg'"/>
-        </div>
-        <div class="modal-slider-dots"></div>
-        <button class="modal-prev">&#8249;</button>
-        <button class="modal-next">&#8250;</button>
-      </div>
-    </div>
-    <div class="modal-content">
-      <div class="modal-num">Proje 02</div>
-      <h2 class="modal-title">Personel Takip Programı</h2>
-      <p class="modal-desc">Şirket çalışanlarının bilgilerini, izin durumlarını ve mesai saatlerini yönetmeye yarayan web tabanlı uygulama. PHP ve MySQL ile geliştirildi.</p>
-      <div class="modal-features">
-        <div class="modal-feature">Yönetici ve çalışan rolü ayrımı</div>
-        <div class="modal-feature">İzin talep ve onay sistemi</div>
-        <div class="modal-feature">Mesai saati takibi ve raporlama</div>
-        <div class="modal-feature">Çalışan bilgi güncelleme paneli</div>
-        <div class="modal-feature">MySQL veritabanı ile kayıt yönetimi</div>
-      </div>
-      <div class="modal-tags">
-        <span class="modal-tag">HTML</span>
-        <span class="modal-tag">CSS</span>
-        <span class="modal-tag">PHP</span>
-        <span class="modal-tag">MySQL</span>
-      </div>
-      <div class="modal-actions">
-        <a href="https://github.com/AnilBerkKeskin" target="_blank" class="modal-btn-primary">GitHub'da Gör →</a>
-        <a href="#" class="modal-btn-secondary">Canlı Demo</a>
-      </div>
-    </div>
-  </div>
-</div>
 
 <script src="../assets/js/main.js"></script>
 </body>
