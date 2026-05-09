@@ -1,0 +1,48 @@
+[
+  {
+    "id": "eticaret",
+    "num": "01",
+    "baslik": "E-Ticaret Sitesi",
+    "kisa_aciklama": "PHP ve MySQL ile dinamik ürün yönetimi, oturum tabanlı sepet sistemi.",
+    "uzun_aciklama": "Kullanıcıların ürün listeleyebildiği, sepete ekleme yapabildiği ve sipariş oluşturabildiği tam işlevli bir alışveriş sitesi. PHP ve MySQL ile geliştirildi.",
+    "ozellikler": [
+      "Dinamik ürün listeleme ve kategori filtreleme",
+      "Oturum tabanlı sepet yönetimi",
+      "Kullanıcı kayıt ve giriş sistemi",
+      "Yönetici paneli ile ürün ekleme/düzenleme",
+      "MySQL ile veritabanı entegrasyonu"
+    ],
+    "teknolojiler": ["HTML", "CSS", "JavaScript", "PHP", "MySQL"],
+    "thumb_class": "thumb-1",
+    "gorseller": [
+      "../assets/images/Anilklise1.png",
+      "../assets/images/Anilklise2.png",
+      "../assets/images/Anilklise3.png"
+    ],
+    "placeholder": "../assets/images/eticaret-placeholder.svg",
+    "github": "https://github.com/AnilBerkKeskin"
+  },
+  {
+    "id": "personel",
+    "num": "02",
+    "baslik": "Personel Takip Programı",
+    "kisa_aciklama": "Yönetici ve çalışan rolleri, izin ve mesai takibi içeren web uygulaması.",
+    "uzun_aciklama": "Şirket çalışanlarının bilgilerini, izin durumlarını ve mesai saatlerini yönetmeye yarayan web tabanlı uygulama. PHP ve MySQL ile geliştirildi.",
+    "ozellikler": [
+      "Yönetici ve çalışan rolü ayrımı",
+      "İzin talep ve onay sistemi",
+      "Mesai saati takibi ve raporlama",
+      "Çalışan bilgi güncelleme paneli",
+      "MySQL veritabanı ile kayıt yönetimi"
+    ],
+    "teknolojiler": ["HTML", "CSS", "PHP", "MySQL"],
+    "thumb_class": "thumb-4",
+    "gorseller": [
+      "../assets/images/PersonelTakip1.png",
+      "../assets/images/PersonelTakip2.png",
+      "../assets/images/PersonelTakip3.png"
+    ],
+    "placeholder": "../assets/images/personel-placeholder.svg",
+    "github": "https://github.com/AnilBerkKeskin"
+  }
+]

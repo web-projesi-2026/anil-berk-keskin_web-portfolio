@@ -1,14 +1,3 @@
-/* =========================================
-   main.js — Tüm JavaScript
-   - Dark mode toggle (localStorage'a kaydeder)
-   - Aktif nav linki
-   - Hamburger menü
-   - Navbar scroll gölgesi
-   - Scroll reveal
-   - Proje slider
-   - İletişim formu
-   ========================================= */
-
 document.addEventListener('DOMContentLoaded', () => {
 
   /* ── Dark Mode ──────────────────────────── */
@@ -68,9 +57,237 @@ document.addEventListener('DOMContentLoaded', () => {
     }, { passive: true });
   }
 
+  /* ── Projeler: JSON'dan dinamik kart üret ── */
+  const projectsGrid = document.getElementById('projectsGrid');
+  if (projectsGrid) {
+    fetch('../assets/data/projects.json')
+      .then(r => r.json())
+      .then(projects => {
+        // Kartları oluştur
+        projects.forEach(p => {
+          const card = document.createElement('div');
+          card.className = 'project-card reveal';
+          card.dataset.modal = p.id;
+
+          // Slider HTML
+          const slidesHTML = p.gorseller.map((g, i) => `
+            <div class="slide ${i === 0 ? 'active' : ''}">
+              <img src="${g}" alt="${p.baslik} ekran ${i+1}"
+                   onerror="this.src='${p.placeholder}'"/>
+            </div>`).join('');
+
+          // Teknoloji etiketleri
+          const tagsHTML = p.teknolojiler.map(t =>
+            `<span class="card-tag">${t}</span>`).join('');
+
+          card.innerHTML = `
+            <div class="card-thumb ${p.thumb_class}">
+              <span class="card-num">${p.num}</span>
+              <div class="slider" data-interval="5000">
+                ${slidesHTML}
+                <div class="slider-dots"></div>
+                <button class="slider-prev" aria-label="Önceki">&#8249;</button>
+                <button class="slider-next" aria-label="Sonraki">&#8250;</button>
+              </div>
+            </div>
+            <div class="card-body">
+              <h3>${p.baslik}</h3>
+              <p>${p.kisa_aciklama}</p>
+              <div class="card-footer">
+                <div class="card-tags">${tagsHTML}</div>
+                <span class="card-link">Detaylar →</span>
+              </div>
+              <button class="btn-inceleme" data-id="${p.id}" data-baslik="${p.baslik}" data-teknoloji="${p.teknolojiler.slice(0,2).join(', ')}">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+                </svg>
+                İnceleme Listesine Al
+              </button>
+            </div>`;
+
+          projectsGrid.appendChild(card);
+        });
+
+        // Modal HTML'lerini de oluştur
+        projects.forEach(p => {
+          const slidesHTML = p.gorseller.map((g, i) => `
+            <div class="modal-slide ${i === 0 ? 'active' : ''}">
+              <img src="${g}" alt="${p.baslik} ekran ${i+1}"
+                   onerror="this.src='${p.placeholder}'"/>
+            </div>`).join('');
+
+          const featuresHTML = p.ozellikler.map(f =>
+            `<div class="modal-feature">${f}</div>`).join('');
+
+          const tagsHTML = p.teknolojiler.map(t =>
+            `<span class="modal-tag">${t}</span>`).join('');
+
+          const overlay = document.createElement('div');
+          overlay.className = 'modal-overlay';
+          overlay.id = `modal-${p.id}`;
+          overlay.innerHTML = `
+            <div class="modal">
+              <button class="modal-close" aria-label="Kapat">✕</button>
+              <div class="modal-slider-wrap">
+                <div class="modal-slider">
+                  ${slidesHTML}
+                  <div class="modal-slider-dots"></div>
+                  <button class="modal-prev">&#8249;</button>
+                  <button class="modal-next">&#8250;</button>
+                </div>
+              </div>
+              <div class="modal-content">
+                <div class="modal-num">Proje ${p.num}</div>
+                <h2 class="modal-title">${p.baslik}</h2>
+                <p class="modal-desc">${p.uzun_aciklama}</p>
+                <div class="modal-features">${featuresHTML}</div>
+                <div class="modal-tags">${tagsHTML}</div>
+                <div class="modal-actions">
+                  <a href="${p.github}" target="_blank" class="modal-btn-primary">GitHub'da Gör →</a>
+                  <a href="#" class="modal-btn-secondary">Canlı Demo</a>
+                </div>
+              </div>
+            </div>`;
+          document.body.appendChild(overlay);
+        });
+
+        // Kartlar hazır, diğer işlemleri başlat
+        initReveal();
+        initSliders();
+        initModals();
+        initInceleme();
+      })
+      .catch(() => {
+        projectsGrid.innerHTML = '<p style="padding:40px;color:var(--text-muted)">Projeler yüklenemedi.</p>';
+      });
+  }
+
+  // Projeler sayfası değilse direkt başlat
+  if (!projectsGrid) {
+    initReveal();
+    initSliders();
+    initModals();
+  }
+
+  /* ── İnceleme Listesi (localStorage) ───── */
+  function initInceleme() {
+    const toggleBtn   = document.getElementById('incelemeToggle');
+    const panel       = document.getElementById('incelemePanel');
+    const countEl     = document.getElementById('incelemeCount');
+    const body        = document.getElementById('incelemePanelBody');
+    const clearBtn    = document.getElementById('incelemeClear');
+    if (!toggleBtn) return;
+
+    // localStorage'dan oku
+    let liste = JSON.parse(localStorage.getItem('incelemeListe') || '[]');
+
+    function kaydet() {
+      localStorage.setItem('incelemeListe', JSON.stringify(liste));
+    }
+
+    function sayfayiGuncelle() {
+      // Sayaç
+      countEl.textContent = liste.length;
+      if (liste.length > 0) {
+        countEl.classList.add('visible');
+      } else {
+        countEl.classList.remove('visible');
+      }
+
+      // Panel içeriği
+      if (liste.length === 0) {
+        body.innerHTML = '<div class="inceleme-empty">Henüz proje eklemediniz.<br>Kartlardaki butona tıklayın.</div>';
+      } else {
+        body.innerHTML = liste.map(item => `
+          <div class="inceleme-item" data-id="${item.id}">
+            <div class="inceleme-item-info">
+              <strong>${item.baslik}</strong>
+              <span>${item.teknoloji}</span>
+            </div>
+            <button class="inceleme-item-remove" data-id="${item.id}" aria-label="Kaldır">✕</button>
+          </div>`).join('');
+
+        // Kaldır butonları
+        body.querySelectorAll('.inceleme-item-remove').forEach(btn => {
+          btn.addEventListener('click', () => {
+            liste = liste.filter(i => i.id !== btn.dataset.id);
+            kaydet();
+            sayfayiGuncelle();
+            guncelleKartButonlari();
+          });
+        });
+      }
+
+      // Kart butonlarını güncelle
+      guncelleKartButonlari();
+    }
+
+    function guncelleKartButonlari() {
+      document.querySelectorAll('.btn-inceleme').forEach(btn => {
+        const eklendi = liste.some(i => i.id === btn.dataset.id);
+        if (eklendi) {
+          btn.classList.add('eklendi');
+          btn.innerHTML = `
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+            Listede`;
+        } else {
+          btn.classList.remove('eklendi');
+          btn.innerHTML = `
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+            </svg>
+            İnceleme Listesine Al`;
+        }
+      });
+    }
+
+    // Kart butonlarına tıklama
+    document.addEventListener('click', e => {
+      const btn = e.target.closest('.btn-inceleme');
+      if (!btn) return;
+      e.stopPropagation();
+      const id       = btn.dataset.id;
+      const baslik   = btn.dataset.baslik;
+      const teknoloji = btn.dataset.teknoloji;
+      const zatenVar = liste.some(i => i.id === id);
+
+      if (zatenVar) {
+        liste = liste.filter(i => i.id !== id);
+      } else {
+        liste.push({ id, baslik, teknoloji });
+      }
+      kaydet();
+      sayfayiGuncelle();
+    });
+
+    // Panel aç/kapat
+    toggleBtn.addEventListener('click', e => {
+      e.stopPropagation();
+      panel.classList.toggle('open');
+    });
+    document.addEventListener('click', e => {
+      if (!panel.contains(e.target) && e.target !== toggleBtn) {
+        panel.classList.remove('open');
+      }
+    });
+
+    // Listeyi temizle
+    clearBtn.addEventListener('click', () => {
+      liste = [];
+      kaydet();
+      sayfayiGuncelle();
+    });
+
+    // Başlangıçta güncelle
+    sayfayiGuncelle();
+  }
+
   /* ── Scroll reveal ──────────────────────── */
-  const revealEls = document.querySelectorAll('.reveal');
-  if (revealEls.length) {
+  function initReveal() {
+    const revealEls = document.querySelectorAll('.reveal');
+    if (!revealEls.length) return;
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(e => {
         if (e.isIntersecting) {
@@ -83,75 +300,71 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   /* ── Proje slider ───────────────────────── */
-  document.querySelectorAll('.slider').forEach(slider => {
-    const slides   = slider.querySelectorAll('.slide');
-    const dotsWrap = slider.querySelector('.slider-dots');
-    const btnPrev  = slider.querySelector('.slider-prev');
-    const btnNext  = slider.querySelector('.slider-next');
-    const interval = parseInt(slider.dataset.interval) || 5000;
-    let current = 0;
-    let timer;
+  function initSliders() {
+    document.querySelectorAll('.slider').forEach(slider => {
+      const slides   = slider.querySelectorAll('.slide');
+      const dotsWrap = slider.querySelector('.slider-dots');
+      const btnPrev  = slider.querySelector('.slider-prev');
+      const btnNext  = slider.querySelector('.slider-next');
+      const interval = parseInt(slider.dataset.interval) || 5000;
+      let current = 0;
+      let timer;
 
-    if (!slides.length || !dotsWrap) return;
+      if (!slides.length || !dotsWrap) return;
 
-    slides.forEach((_, i) => {
-      const dot = document.createElement('button');
-      dot.className = 'slider-dot' + (i === 0 ? ' active' : '');
-      dot.setAttribute('aria-label', `Slayt ${i + 1}`);
-      dot.addEventListener('click', () => { stopTimer(); goTo(i); startTimer(); });
-      dotsWrap.appendChild(dot);
+      slides.forEach((_, i) => {
+        const dot = document.createElement('button');
+        dot.className = 'slider-dot' + (i === 0 ? ' active' : '');
+        dot.setAttribute('aria-label', `Slayt ${i + 1}`);
+        dot.addEventListener('click', () => { stopTimer(); goTo(i); startTimer(); });
+        dotsWrap.appendChild(dot);
+      });
+
+      function goTo(n) {
+        slides[current].classList.remove('active');
+        dotsWrap.children[current].classList.remove('active');
+        current = (n + slides.length) % slides.length;
+        slides[current].classList.add('active');
+        dotsWrap.children[current].classList.add('active');
+      }
+      function startTimer() { timer = setInterval(() => goTo(current + 1), interval); }
+      function stopTimer()  { clearInterval(timer); }
+
+      btnPrev?.addEventListener('click', () => { stopTimer(); goTo(current - 1); startTimer(); });
+      btnNext?.addEventListener('click', () => { stopTimer(); goTo(current + 1); startTimer(); });
+      slider.addEventListener('mouseenter', stopTimer);
+      slider.addEventListener('mouseleave', startTimer);
+      startTimer();
+    });
+  }
+
+  /* ── Modal ──────────────────────────────── */
+  function initModals() {
+    document.querySelectorAll('.project-card[data-modal]').forEach(card => {
+      card.addEventListener('click', (e) => {
+        if (e.target.closest('.slider-prev') || e.target.closest('.slider-next') ||
+            e.target.closest('.slider-dot') || e.target.closest('.btn-inceleme')) return;
+        const overlay = document.getElementById('modal-' + card.dataset.modal);
+        if (!overlay) return;
+        overlay.classList.add('open');
+        document.body.style.overflow = 'hidden';
+        initModalSlider(overlay);
+      });
     });
 
-    function goTo(n) {
-      slides[current].classList.remove('active');
-      dotsWrap.children[current].classList.remove('active');
-      current = (n + slides.length) % slides.length;
-      slides[current].classList.add('active');
-      dotsWrap.children[current].classList.add('active');
-    }
-    function startTimer() { timer = setInterval(() => goTo(current + 1), interval); }
-    function stopTimer()  { clearInterval(timer); }
-
-    if (btnPrev) btnPrev.addEventListener('click', () => { stopTimer(); goTo(current - 1); startTimer(); });
-    if (btnNext) btnNext.addEventListener('click', () => { stopTimer(); goTo(current + 1); startTimer(); });
-
-    slider.addEventListener('mouseenter', stopTimer);
-    slider.addEventListener('mouseleave', startTimer);
-    startTimer();
-  });
-
-  /* ── Proje modal ────────────────────────── */
-  // Kart tıklaması → modal aç
-  document.querySelectorAll('.project-card[data-modal]').forEach(card => {
-    card.addEventListener('click', (e) => {
-      // Slider ok butonlarına tıklanınca modal açılmasın
-      if (e.target.closest('.slider-prev') || e.target.closest('.slider-next') || e.target.closest('.slider-dot')) return;
-      const modalId = 'modal-' + card.dataset.modal;
-      const overlay = document.getElementById(modalId);
-      if (!overlay) return;
-      overlay.classList.add('open');
-      document.body.style.overflow = 'hidden';
-      // Modal slider'ı başlat
-      initModalSlider(overlay);
+    document.addEventListener('click', e => {
+      const overlay = e.target.closest('.modal-overlay');
+      if (overlay && (e.target === overlay || e.target.closest('.modal-close'))) {
+        closeModal(overlay);
+      }
     });
-  });
 
-  // Modal kapat — overlay veya X butonu
-  document.querySelectorAll('.modal-overlay').forEach(overlay => {
-    // X butonu
-    overlay.querySelector('.modal-close')?.addEventListener('click', () => closeModal(overlay));
-    // Overlay dışına tıklama
-    overlay.addEventListener('click', (e) => {
-      if (e.target === overlay) closeModal(overlay);
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') {
+        document.querySelectorAll('.modal-overlay.open').forEach(closeModal);
+      }
     });
-  });
-
-  // ESC tuşu ile kapat
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') {
-      document.querySelectorAll('.modal-overlay.open').forEach(closeModal);
-    }
-  });
+  }
 
   function closeModal(overlay) {
     overlay.classList.remove('open');
