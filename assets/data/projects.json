@@ -15,11 +15,11 @@
     "teknolojiler": ["HTML", "CSS", "JavaScript", "PHP", "MySQL"],
     "thumb_class": "thumb-1",
     "gorseller": [
-      "../assets/images/Anilklise1.png",
-      "../assets/images/Anilklise2.png",
-      "../assets/images/Anilklise3.png"
+      "../images/Anilklise1.png",
+      "../images/Anilklise2.png",
+      "../images/Anilklise3.png"
     ],
-    "placeholder": "../assets/images/eticaret-placeholder.svg",
+    "placeholder": "../images/eticaret-placeholder.svg",
     "github": "https://github.com/AnilBerkKeskin"
   },
   {
@@ -38,11 +38,11 @@
     "teknolojiler": ["HTML", "CSS", "PHP", "MySQL"],
     "thumb_class": "thumb-4",
     "gorseller": [
-      "../assets/images/PersonelTakip1.png",
-      "../assets/images/PersonelTakip2.png",
-      "../assets/images/PersonelTakip3.png"
+      "../images/PersonelTakip1.png",
+      "../images/PersonelTakip2.png",
+      "../images/PersonelTakip3.png"
     ],
-    "placeholder": "../assets/images/personel-placeholder.svg",
+    "placeholder": "../images/personel-placeholder.svg",
     "github": "https://github.com/AnilBerkKeskin"
   }
 ]
