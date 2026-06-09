@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8"/>
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Projeler — Anıl Berk Keskin</title>
+  <link rel="stylesheet" href="../assets/css/global.css"/>
+  <link rel="stylesheet" href="../assets/css/projects.css"/>
+  <link rel="stylesheet" href="../assets/css/responsive.css"/>
+</head>
+<body>
+
+<nav class="navbar">
+  <ul class="nav-links">
+    <li><a href="../index.html">Anasayfa</a></li>
+    <li><a href="about.html">Hakkımda</a></li>
+    <li><a href="Projects.html">Projeler</a></li>
+    <li><a href="contact.html">İletişim</a></li>
+  </ul>
+  <button class="nav-toggle" aria-label="Menü">
+    <span></span><span></span><span></span>
+  </button>
+  <div class="nav-cta">
+    <button class="dark-toggle" aria-label="Dark mode toggle" title="Temayı değiştir">
+      <svg class="icon-sun" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="17" height="17"><circle cx="12" cy="12" r="4"/><line x1="12" y1="2" x2="12" y2="5"/><line x1="12" y1="19" x2="12" y2="22"/><line x1="4.22" y1="4.22" x2="6.34" y2="6.34"/><line x1="17.66" y1="17.66" x2="19.78" y2="19.78"/><line x1="2" y1="12" x2="5" y2="12"/><line x1="19" y1="12" x2="22" y2="12"/><line x1="4.22" y1="19.78" x2="6.34" y2="17.66"/><line x1="17.66" y1="6.34" x2="19.78" y2="4.22"/></svg>
+      <svg class="icon-moon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="17" height="17"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
+    <a href="contact.html" class="btn-nav">İletişime Geç</a>
+  </div>
+</nav>
+
+<div class="page-wrap">
+
+  <div class="projects-hero">
+    <div class="section-label anim-fadein">Projeler</div>
+    <h1 class="anim-fadeup anim-delay-1">
+      Ürettiklerim<br>
+      &amp; <em>geliştirdiklerim.</em>
+    </h1>
+    <p class="anim-fadeup anim-delay-2">
+      Her proje bir öğrenme deneyimi ve yeni bir meydan okuma.
+    </p>
+  </div>
+
+  <section class="projects-section">
+
+    <!-- ── Arama + Filtre ── -->
+    <div class="projects-toolbar">
+      <div class="projects-search-wrap">
+        <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="search" id="projeArama" class="projects-search" placeholder="Proje veya teknoloji ara..." autocomplete="off">
+        <button class="search-clear" id="aramaTumSifirla" aria-label="Temizle" style="display:none">✕</button>
+      </div>
+      <div class="projects-filters" id="projeFiltreler">
+        <button class="filter-btn active" data-filter="tumu">Tümü</button>
+      </div>
+    </div>
+
+    <p class="projects-sonuc" id="projeSonuc"></p>
+
+    <!-- Kartlar JS tarafından dinamik üretilir -->
+    <div class="projects-grid--two" id="projectsGrid"></div>
+
+    <div class="projects-bos" id="projeBos" style="display:none">
+      <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.5" width="48" height="48"><circle cx="32" cy="28" r="14"/><line x1="42" y1="42" x2="54" y2="54"/><line x1="26" y1="28" x2="38" y2="28"/></svg>
+      <p>Arama kriterlerinize uygun proje bulunamadı.</p>
+    </div>
+
+  </section>
+
+  <!-- YÜZEN İNCELEME LİSTESİ -->
+  <div class="inceleme-fab">
+    <div class="inceleme-panel" id="incelemePanel">
+      <div class="inceleme-panel-header">
+        <h4>📋 İnceleme Listem</h4>
+        <button class="inceleme-panel-clear" id="incelemeClear">Temizle</button>
+      </div>
+      <div class="inceleme-panel-body" id="incelemePanelBody">
+        <div class="inceleme-empty">Henüz proje eklemediniz.<br>Kartlardaki butona tıklayın.</div>
+      </div>
+    </div>
+    <button class="inceleme-btn" id="incelemeToggle" aria-label="İnceleme listesi">
+      <svg viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><line x1="9" y1="12" x2="15" y2="12"/><line x1="9" y1="16" x2="13" y2="16"/></svg>
+      <span class="inceleme-count" id="incelemeCount">0</span>
+    </button>
+  </div>
+
+  <div class="cta-strip">
+    <h2>Birlikte <em>çalışalım</em> mı?</h2>
+    <a href="contact.html" class="btn-cta-light">İletişime Geç →</a>
+  </div>
+
+  <footer>
+    <div class="footer-logo">Anıl Berk Keskin<span>.</span></div>
+    <ul class="footer-links">
+      <li><a href="../index.html">Anasayfa</a></li>
+      <li><a href="about.html">Hakkımda</a></li>
+      <li><a href="Projects.html">Projeler</a></li>
+      <li><a href="contact.html">İletişim</a></li>
+    </ul>
+    <div class="footer-copy">© 2026 Anıl Berk Keskin. Tüm hakları saklıdır.</div>
+  </footer>
+
+</div>
+
+
+<!-- Inline project data — CORS güvenli çalışır -->
+<script>
+window.PROJECTS_DATA = [
+  {
+    "id": "eticaret",
+    "num": "01",
+    "baslik": "E-Ticaret Sitesi",
+    "kisa_aciklama": "PHP ve MySQL ile dinamik ürün yönetimi, oturum tabanlı sepet sistemi.",
+    "uzun_aciklama": "Kullanıcıların ürün listeleyebildiği, sepete ekleme yapabildiği ve sipariş oluşturabildiği tam işlevli bir alışveriş sitesi. PHP ve MySQL ile geliştirildi.",
+    "ozellikler": [
+      "Dinamik ürün listeleme ve kategori filtreleme",
+      "Oturum tabanlı sepet yönetimi",
+      "Kullanıcı kayıt ve giriş sistemi",
+      "Yönetici paneli ile ürün ekleme/düzenleme",
+      "MySQL ile veritabanı entegrasyonu"
+    ],
+    "teknolojiler": ["HTML", "CSS", "JavaScript", "PHP", "MySQL"],
+    "thumb_class": "thumb-1",
+    "gorseller": [
+      "../images/Anilklise1.png",
+      "../images/Anilklise2.png",
+      "../images/Anilklise3.png"
+    ],
+    "placeholder": "../images/eticaret-placeholder.svg",
+    "github": "https://github.com/AnilBerkKeskin"
+  },
+  {
+    "id": "personel",
+    "num": "02",
+    "baslik": "Personel Takip Programı",
+    "kisa_aciklama": "Yönetici ve çalışan rolleri, izin ve mesai takibi içeren web uygulaması.",
+    "uzun_aciklama": "Şirket çalışanlarının bilgilerini, izin durumlarını ve mesai saatlerini yönetmeye yarayan web tabanlı uygulama. PHP ve MySQL ile geliştirildi.",
+    "ozellikler": [
+      "Yönetici ve çalışan rolü ayrımı",
+      "İzin talep ve onay sistemi",
+      "Mesai saati takibi ve raporlama",
+      "Çalışan bilgi güncelleme paneli",
+      "MySQL veritabanı ile kayıt yönetimi"
+    ],
+    "teknolojiler": ["HTML", "CSS", "PHP", "MySQL"],
+    "thumb_class": "thumb-4",
+    "gorseller": [
+      "../images/PersonelTakip1.png",
+      "../images/PersonelTakip2.png",
+      "../images/PersonelTakip3.png"
+    ],
+    "placeholder": "../images/personel-placeholder.svg",
+    "github": "https://github.com/AnilBerkKeskin"
+  }
+];
+</script>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>
