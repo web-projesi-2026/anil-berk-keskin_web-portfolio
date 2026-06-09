@@ -1,0 +1,9 @@
+# Hassas bilgiler — asla commit'leme
+.env
+
+# PHPMailer zip (gereksiz, klasör zaten var)
+api/PHPMailer-master.zip
+
+# OS dosyaları
+.DS_Store
+Thumbs.db
