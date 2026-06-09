@@ -1,5 +1,28 @@
 document.addEventListener('DOMContentLoaded', () => {
 
+  /* ── Yardımcı: Panel dışı tıklayınca kapat ─ */
+  function panelDisariKapat(panelEl, toggleEl) {
+    document.addEventListener('click', e => {
+      if (!panelEl.contains(e.target) && e.target !== toggleEl) {
+        panelEl.classList.remove('open');
+      }
+    });
+  }
+
+  /* ── API Ayarları ───────────────────── */
+  // Sunucu yapısına göre bu yolu güncelleyin
+  const API_BASE = '../api';
+
+  /* ── Tarayıcı Token (kalıcı kimlik) ────── */
+  function getTarayiciToken() {
+    let token = localStorage.getItem('portfolio_browser_token');
+    if (!token) {
+      token = 'tk_' + Date.now().toString(36) + '_' + Math.random().toString(36).slice(2, 10);
+      localStorage.setItem('portfolio_browser_token', token);
+    }
+    return token;
+  }
+
   /* ── Dark Mode ──────────────────────────── */
   const htmlEl = document.documentElement;
 
@@ -60,9 +83,7 @@ document.addEventListener('DOMContentLoaded', () => {
   /* ── Projeler: JSON'dan dinamik kart üret ── */
   const projectsGrid = document.getElementById('projectsGrid');
   if (projectsGrid) {
-    fetch('../assets/data/projects.json')
-      .then(r => r.json())
-      .then(projects => {
+    function loadProjects(projects) {
         // Kartları oluştur
         projects.forEach(p => {
           const card = document.createElement('div');
@@ -156,10 +177,109 @@ document.addEventListener('DOMContentLoaded', () => {
         initSliders();
         initModals();
         initInceleme();
-      })
-      .catch(() => {
-        projectsGrid.innerHTML = '<p style="padding:40px;color:var(--text-muted)">Projeler yüklenemedi.</p>';
+
+        // ── Arama + Filtre ──────────────────
+        initProjeFiltre(projects);
+      }
+
+    // ── Proje Arama & Filtre Motoru ────────────
+    function initProjeFiltre(projects) {
+      const aramaInput  = document.getElementById('projeArama');
+      const filtreler   = document.getElementById('projeFiltreler');
+      const sonucEl     = document.getElementById('projeSonuc');
+      const bosEl       = document.getElementById('projeBos');
+      const sifirlaBtn  = document.getElementById('aramaTumSifirla');
+      if (!aramaInput || !filtreler) return;
+
+      // Tüm teknolojileri topla → filtre butonları oluştur
+      const tekSet = new Set();
+      projects.forEach(p => p.teknolojiler.forEach(t => tekSet.add(t)));
+      tekSet.forEach(tek => {
+        const btn = document.createElement('button');
+        btn.className = 'filter-btn';
+        btn.dataset.filter = tek.toLowerCase();
+        btn.textContent = tek;
+        filtreler.appendChild(btn);
       });
+
+      let aktifFiltre = 'tumu';
+      let aramaMetni  = '';
+
+      function filtrele() {
+        const kartlar = projectsGrid.querySelectorAll('.project-card');
+        let gorunen = 0;
+
+        kartlar.forEach(kart => {
+          const idx   = [...projectsGrid.children].indexOf(kart);
+          const p     = projects[idx];
+          if (!p) return;
+
+          const tekEslesti = aktifFiltre === 'tumu' ||
+            p.teknolojiler.some(t => t.toLowerCase() === aktifFiltre);
+
+          const ara = aramaMetni.toLowerCase();
+          const araEslesti = !ara ||
+            p.baslik.toLowerCase().includes(ara) ||
+            p.kisa_aciklama.toLowerCase().includes(ara) ||
+            p.teknolojiler.some(t => t.toLowerCase().includes(ara));
+
+          const goster = tekEslesti && araEslesti;
+          kart.classList.toggle('gizli', !goster);
+          if (goster) gorunen++;
+        });
+
+        // Bulunamadı / sonuç metni
+        if (bosEl) bosEl.style.display = gorunen === 0 ? 'flex' : 'none';
+        if (sonucEl) {
+          if (aramaMetni || aktifFiltre !== 'tumu') {
+            sonucEl.textContent = `${gorunen} proje bulundu`;
+          } else {
+            sonucEl.textContent = '';
+          }
+        }
+        if (sifirlaBtn) {
+          sifirlaBtn.style.display = aramaMetni ? 'block' : 'none';
+        }
+      }
+
+      // Arama kutusu
+      aramaInput.addEventListener('input', e => {
+        aramaMetni = e.target.value.trim();
+        filtrele();
+      });
+
+      // X temizle butonu
+      if (sifirlaBtn) {
+        sifirlaBtn.addEventListener('click', () => {
+          aramaInput.value = '';
+          aramaMetni = '';
+          filtrele();
+          aramaInput.focus();
+        });
+      }
+
+      // Filtre butonları
+      filtreler.addEventListener('click', e => {
+        const btn = e.target.closest('.filter-btn');
+        if (!btn) return;
+        filtreler.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        aktifFiltre = btn.dataset.filter;
+        filtrele();
+      });
+    }
+
+        // Inline veri varsa direkt kullan, yoksa fetch dene
+    if (window.PROJECTS_DATA) {
+      loadProjects(window.PROJECTS_DATA);
+    } else {
+      fetch('../assets/data/projects.json')
+        .then(r => r.json())
+        .then(loadProjects)
+        .catch(() => {
+          projectsGrid.innerHTML = '<p style="padding:40px;color:var(--text-muted)">Projeler yüklenemedi.</p>';
+        });
+    }
   }
 
   // Projeler sayfası değilse direkt başlat
@@ -267,11 +387,7 @@ document.addEventListener('DOMContentLoaded', () => {
       e.stopPropagation();
       panel.classList.toggle('open');
     });
-    document.addEventListener('click', e => {
-      if (!panel.contains(e.target) && e.target !== toggleBtn) {
-        panel.classList.remove('open');
-      }
-    });
+    panelDisariKapat(panel, toggleBtn);
 
     // Listeyi temizle
     clearBtn.addEventListener('click', () => {
@@ -282,6 +398,197 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Başlangıçta güncelle
     sayfayiGuncelle();
+  }
+
+
+  /* ── Mesaj Listesi — API İle (İletişim sayfası) ─ */
+  let sayfaMesajGuncelle = null;
+
+  function initMesajListesi() {
+    const toggleBtn = document.getElementById('mesajToggle');
+    const panel     = document.getElementById('mesajPanel');
+    const countEl   = document.getElementById('mesajCount');
+    const body      = document.getElementById('mesajPanelBody');
+    const clearBtn  = document.getElementById('mesajClear');
+    if (!toggleBtn) return;
+
+    // ── API'den mesajları çek ─────────────────
+    async function apidanGetir() {
+      const token = getTarayiciToken();
+      body.innerHTML = '<div class="mesaj-loading"><span class="mesaj-spinner"></span> Yükleniyor...</div>';
+      try {
+        const res  = await fetch(`${API_BASE}/mesajlari_getir.php?token=${encodeURIComponent(token)}`);
+        const data = await res.json();
+        if (data.basarili) {
+          render(data.mesajlar);
+        } else {
+          body.innerHTML = '<div class="mesaj-empty">Mesajlar yüklenemedi.</div>';
+        }
+      } catch {
+        body.innerHTML = '<div class="mesaj-empty">Sunucuya ulaşılamadı.</div>';
+      }
+    }
+
+    // ── Mesajı DB'den sil ────────────────────
+    async function mesajSil(id, kartEl) {
+      kartEl.classList.add('siliniyor');
+      try {
+        const res  = await fetch(`${API_BASE}/mesaj_sil.php`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ id, token: getTarayiciToken() })
+        });
+        const data = await res.json();
+        if (data.basarili) {
+          kartEl.style.transition = 'opacity 0.25s, transform 0.25s';
+          kartEl.style.opacity = '0';
+          kartEl.style.transform = 'translateX(20px)';
+          setTimeout(() => { kartEl.remove(); silSayacGuncelle(); }, 260);
+        } else {
+          kartEl.classList.remove('siliniyor');
+          alert('Silinemedi: ' + (data.hata || 'Bilinmeyen hata'));
+        }
+      } catch {
+        kartEl.classList.remove('siliniyor');
+        alert('Sunucuya ulaşılamadı.');
+      }
+    }
+
+    function silSayacGuncelle() {
+      const kalan = body.querySelectorAll('.mesaj-item').length;
+      countEl.textContent = kalan;
+      countEl.classList.toggle('visible', kalan > 0);
+      if (kalan === 0) body.innerHTML = '<div class="mesaj-empty">Henüz mesaj göndermediniz.</div>';
+    }
+
+    // ── Düzenleme formunu aç ─────────────────
+    function duzenlemeAc(kart, mevcutMesaj) {
+      // Zaten açıksa kapat
+      const mevcutForm = kart.querySelector('.mesaj-edit-form');
+      if (mevcutForm) { mevcutForm.remove(); return; }
+
+      const textEl = kart.querySelector('.mesaj-item-text');
+      if (textEl) textEl.style.display = 'none';
+
+      const form = document.createElement('div');
+      form.className = 'mesaj-edit-form';
+      form.innerHTML = `
+        <textarea class="mesaj-edit-textarea" rows="3">${mevcutMesaj}</textarea>
+        <div class="mesaj-edit-actions">
+          <button class="mesaj-edit-iptal">İptal</button>
+          <button class="mesaj-edit-kaydet">Kaydet</button>
+        </div>`;
+
+      kart.appendChild(form);
+      form.querySelector('.mesaj-edit-textarea').focus();
+
+      form.querySelector('.mesaj-edit-iptal').addEventListener('click', () => {
+        form.remove();
+        if (textEl) textEl.style.display = '';
+      });
+
+      form.querySelector('.mesaj-edit-kaydet').addEventListener('click', async () => {
+        const yeniMesaj = form.querySelector('.mesaj-edit-textarea').value.trim();
+        if (!yeniMesaj || yeniMesaj.length < 5) {
+          form.querySelector('.mesaj-edit-textarea').style.borderColor = '#e05252';
+          return;
+        }
+        const btn = form.querySelector('.mesaj-edit-kaydet');
+        btn.disabled = true;
+        btn.textContent = 'Kaydediliyor...';
+
+        try {
+          const res  = await fetch(`${API_BASE}/mesaj_guncelle.php`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ id: kart.dataset.id, mesaj: yeniMesaj, token: getTarayiciToken() })
+          });
+          const data = await res.json();
+          if (data.basarili) {
+            if (textEl) { textEl.textContent = yeniMesaj; textEl.style.display = ''; }
+            form.remove();
+          } else {
+            alert('Güncellenemedi: ' + (data.hata || 'Hata'));
+            btn.disabled = false;
+            btn.textContent = 'Kaydet';
+          }
+        } catch {
+          alert('Sunucuya ulaşılamadı.');
+          btn.disabled = false;
+          btn.textContent = 'Kaydet';
+        }
+      });
+    }
+
+    function render(liste) {
+      countEl.textContent = liste.length;
+      countEl.classList.toggle('visible', liste.length > 0);
+
+      if (liste.length === 0) {
+        body.innerHTML = '<div class="mesaj-empty">Henüz mesaj göndermediniz.</div>';
+        return;
+      }
+
+      body.innerHTML = liste.map(item => `
+        <div class="mesaj-item" data-id="${item.id}">
+          <div class="mesaj-item-header">
+            <strong>${item.konu}</strong>
+            <span class="mesaj-item-tarih">${item.tarih}</span>
+            <div class="mesaj-item-actions">
+              <button class="mesaj-item-duzenle-btn" data-mesaj="${item.mesaj.replace(/"/g,'&quot;')}" title="Düzenle" aria-label="Mesajı düzenle">✎</button>
+              <button class="mesaj-item-sil-btn" title="Sil" aria-label="Mesajı sil">✕</button>
+            </div>
+          </div>
+          <div class="mesaj-item-meta">${item.ad} &bull; ${item.email}</div>
+          <div class="mesaj-item-text">${item.mesaj}</div>
+          ${item.cevap
+            ? `<div class="mesaj-item-cevap"><span class="cevap-label">✉ Yanıt:</span> ${item.cevap}</div>`
+            : '<div class="mesaj-item-bekliyor">⏳ Yanıt bekleniyor...</div>'
+          }
+        </div>`).join('');
+
+      body.querySelectorAll('.mesaj-item-sil-btn').forEach(btn => {
+        btn.addEventListener('click', e => {
+          e.stopPropagation();
+          const kart = btn.closest('.mesaj-item');
+          if (confirm('Bu mesajı silmek istediğinize emin misiniz?')) {
+            mesajSil(kart.dataset.id, kart);
+          }
+        });
+      });
+
+      body.querySelectorAll('.mesaj-item-duzenle-btn').forEach(btn => {
+        btn.addEventListener('click', e => {
+          e.stopPropagation();
+          const kart = btn.closest('.mesaj-item');
+          duzenlemeAc(kart, btn.dataset.mesaj);
+        });
+      });
+    }
+
+    // Panel açılınca API'yi yenile
+    sayfaMesajGuncelle = apidanGetir;
+
+    toggleBtn.addEventListener('click', e => {
+      e.stopPropagation();
+      const isOpening = !panel.classList.contains('open');
+      panel.classList.toggle('open');
+      if (isOpening) apidanGetir();
+    });
+
+    panelDisariKapat(panel, toggleBtn);
+
+    // Temizle = sadece paneli kapat (silme işlemi yok, DB'de kalır)
+    clearBtn.textContent = 'Yenile';
+    clearBtn.addEventListener('click', () => apidanGetir());
+
+    // İlk yükleme
+    apidanGetir();
+  }
+
+  // İletişim sayfasında başlat
+  if (document.getElementById('mesajToggle')) {
+    initMesajListesi();
   }
 
   /* ── Scroll reveal ──────────────────────── */
@@ -299,42 +606,54 @@ document.addEventListener('DOMContentLoaded', () => {
     revealEls.forEach(el => observer.observe(el));
   }
 
+  /* ── Slider yardımcısı (kart ve modal paylaşır) ── */
+  function createSlider({ container, slideSelector, dotClass, prevBtn, nextBtn, dotsContainer, interval }) {
+    const slides   = container.querySelectorAll(slideSelector);
+    const dotsWrap = container.querySelector(dotsContainer);
+    const btnPrev  = container.querySelector(prevBtn);
+    const btnNext  = container.querySelector(nextBtn);
+    let current = 0;
+    let timer;
+
+    if (!slides.length || !dotsWrap) return;
+
+    slides.forEach((_, i) => {
+      const dot = document.createElement('button');
+      dot.className = dotClass + (i === 0 ? ' active' : '');
+      dot.setAttribute('aria-label', `Slayt ${i + 1}`);
+      dot.addEventListener('click', () => { stopTimer(); goTo(i); startTimer(); });
+      dotsWrap.appendChild(dot);
+    });
+
+    function goTo(n) {
+      slides[current].classList.remove('active');
+      dotsWrap.children[current].classList.remove('active');
+      current = (n + slides.length) % slides.length;
+      slides[current].classList.add('active');
+      dotsWrap.children[current].classList.add('active');
+    }
+    function startTimer() { timer = setInterval(() => goTo(current + 1), interval); }
+    function stopTimer()  { clearInterval(timer); }
+
+    btnPrev?.addEventListener('click', () => { stopTimer(); goTo(current - 1); startTimer(); });
+    btnNext?.addEventListener('click', () => { stopTimer(); goTo(current + 1); startTimer(); });
+    container.addEventListener('mouseenter', stopTimer);
+    container.addEventListener('mouseleave', startTimer);
+    startTimer();
+  }
+
   /* ── Proje slider ───────────────────────── */
   function initSliders() {
     document.querySelectorAll('.slider').forEach(slider => {
-      const slides   = slider.querySelectorAll('.slide');
-      const dotsWrap = slider.querySelector('.slider-dots');
-      const btnPrev  = slider.querySelector('.slider-prev');
-      const btnNext  = slider.querySelector('.slider-next');
-      const interval = parseInt(slider.dataset.interval) || 5000;
-      let current = 0;
-      let timer;
-
-      if (!slides.length || !dotsWrap) return;
-
-      slides.forEach((_, i) => {
-        const dot = document.createElement('button');
-        dot.className = 'slider-dot' + (i === 0 ? ' active' : '');
-        dot.setAttribute('aria-label', `Slayt ${i + 1}`);
-        dot.addEventListener('click', () => { stopTimer(); goTo(i); startTimer(); });
-        dotsWrap.appendChild(dot);
+      createSlider({
+        container:      slider,
+        slideSelector:  '.slide',
+        dotClass:       'slider-dot',
+        prevBtn:        '.slider-prev',
+        nextBtn:        '.slider-next',
+        dotsContainer:  '.slider-dots',
+        interval:       parseInt(slider.dataset.interval) || 5000,
       });
-
-      function goTo(n) {
-        slides[current].classList.remove('active');
-        dotsWrap.children[current].classList.remove('active');
-        current = (n + slides.length) % slides.length;
-        slides[current].classList.add('active');
-        dotsWrap.children[current].classList.add('active');
-      }
-      function startTimer() { timer = setInterval(() => goTo(current + 1), interval); }
-      function stopTimer()  { clearInterval(timer); }
-
-      btnPrev?.addEventListener('click', () => { stopTimer(); goTo(current - 1); startTimer(); });
-      btnNext?.addEventListener('click', () => { stopTimer(); goTo(current + 1); startTimer(); });
-      slider.addEventListener('mouseenter', stopTimer);
-      slider.addEventListener('mouseleave', startTimer);
-      startTimer();
     });
   }
 
@@ -372,40 +691,19 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function initModalSlider(overlay) {
-    const slider   = overlay.querySelector('.modal-slider');
+    const slider = overlay.querySelector('.modal-slider');
     if (!slider || slider.dataset.initialized) return;
     slider.dataset.initialized = 'true';
 
-    const slides   = slider.querySelectorAll('.modal-slide');
-    const dotsWrap = slider.querySelector('.modal-slider-dots');
-    const btnPrev  = slider.querySelector('.modal-prev');
-    const btnNext  = slider.querySelector('.modal-next');
-    let current = 0;
-    let timer;
-
-    slides.forEach((_, i) => {
-      const dot = document.createElement('button');
-      dot.className = 'modal-slider-dot' + (i === 0 ? ' active' : '');
-      dot.setAttribute('aria-label', `Slayt ${i + 1}`);
-      dot.addEventListener('click', () => { stopTimer(); goTo(i); startTimer(); });
-      dotsWrap.appendChild(dot);
+    createSlider({
+      container:      slider,
+      slideSelector:  '.modal-slide',
+      dotClass:       'modal-slider-dot',
+      prevBtn:        '.modal-prev',
+      nextBtn:        '.modal-next',
+      dotsContainer:  '.modal-slider-dots',
+      interval:       4000,
     });
-
-    function goTo(n) {
-      slides[current].classList.remove('active');
-      dotsWrap.children[current].classList.remove('active');
-      current = (n + slides.length) % slides.length;
-      slides[current].classList.add('active');
-      dotsWrap.children[current].classList.add('active');
-    }
-    function startTimer() { timer = setInterval(() => goTo(current + 1), 4000); }
-    function stopTimer()  { clearInterval(timer); }
-
-    btnPrev?.addEventListener('click', () => { stopTimer(); goTo(current - 1); startTimer(); });
-    btnNext?.addEventListener('click', () => { stopTimer(); goTo(current + 1); startTimer(); });
-    slider.addEventListener('mouseenter', stopTimer);
-    slider.addEventListener('mouseleave', startTimer);
-    startTimer();
   }
 
   /* ── İletişim formu — validasyon + Formspree ── */
@@ -505,17 +803,25 @@ document.addEventListener('DOMContentLoaded', () => {
       sendBtn.classList.add('loading');
       sendBtn.disabled = true;
 
-      const templateParams = {
-        ad:     document.getElementById('fname').value.trim(),
-        soyad:  document.getElementById('lname').value.trim(),
-        email:  document.getElementById('email').value.trim(),
-        konu:   document.getElementById('subject').value,
-        mesaj:  document.getElementById('message').value.trim(),
-        name:   document.getElementById('fname').value.trim() + ' ' + document.getElementById('lname').value.trim()
-      };
+      const fname = document.getElementById('fname').value.trim();
+      const lname = document.getElementById('lname').value.trim();
 
-      emailjs.send('service_jtzou9i', 'template_iu4mmul', templateParams)
-        .then(() => {
+      // ── PHP API ile gönder (DB kayıt + mail) ──
+      fetch(`${API_BASE}/mesaj_gonder.php`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          ad:             fname,
+          soyad:          lname,
+          email:          document.getElementById('email').value.trim(),
+          konu:           document.getElementById('subject').value,
+          mesaj:          document.getElementById('message').value.trim(),
+          tarayici_token: getTarayiciToken()
+        })
+      })
+      .then(r => r.json())
+      .then(data => {
+        if (data.basarili) {
           sendBtn.textContent = '✓ Gönderildi!';
           sendBtn.classList.remove('loading');
           sendBtn.classList.add('sent');
@@ -523,6 +829,9 @@ document.addEventListener('DOMContentLoaded', () => {
             successMsg.classList.add('visible');
             successMsg.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
           }
+          // Paneli yenile
+          if (typeof sayfaMesajGuncelle === 'function') sayfaMesajGuncelle();
+
           contactForm.reset();
           fields.forEach(id => {
             const el = document.getElementById(id);
@@ -534,17 +843,21 @@ document.addEventListener('DOMContentLoaded', () => {
             sendBtn.disabled = false;
             if (successMsg) successMsg.classList.remove('visible');
           }, 6000);
-        })
-        .catch(() => {
-          sendBtn.textContent = '✗ Hata oluştu, tekrar dene';
-          sendBtn.classList.remove('loading');
-          sendBtn.classList.add('error-state');
-          sendBtn.disabled = false;
-          setTimeout(() => {
-            sendBtn.textContent = 'Mesajı Gönder →';
-            sendBtn.classList.remove('error-state');
-          }, 4000);
-        });
+        } else {
+          throw new Error(data.hata || 'Sunucu hatası');
+        }
+      })
+      .catch((err) => {
+        console.error('Gönderme Hatası:', err);
+        sendBtn.textContent = '✗ Hata oluştu, tekrar dene';
+        sendBtn.classList.remove('loading');
+        sendBtn.classList.add('error-state');
+        sendBtn.disabled = false;
+        setTimeout(() => {
+          sendBtn.textContent = 'Mesajı Gönder →';
+          sendBtn.classList.remove('error-state');
+        }, 4000);
+      });
     });
   }
 
