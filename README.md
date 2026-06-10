@@ -2,7 +2,7 @@
 
 Kirsehir Ahi Evran Universitesi Bilgisayar Programciligi bolumu ogrencisi olarak gelistirdigim, projelerimi ve yetkinliklerimi sergiledigim kisisel web sitemdir.
 
-**Siteye Git:** https://web-projesi-2026.github.io/anil-berk-keskin_web-portfolio/
+**Siteye Git:** https://anilklise.com.tr/
 
 ---
 
