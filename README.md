@@ -1,119 +1,166 @@
-👨‍💻 Anıl Berk Keskin — Kişisel Portfolyo
-Kırşehir Ahi Evran Üniversitesi Bilgisayar Programcılığı bölümü öğrencisi olarak geliştirdiğim, projelerimi ve yetkinliklerimi sergilediğim kişisel web sitemdir.
-🔗 Siteye Git: https://web-projesi-2026.github.io/anil-berk-keskin_web-portfolio/
+# Anil Berk Keskin - Kisisel Portfolyo
+
+Kirsehir Ahi Evran Universitesi Bilgisayar Programciligi bolumu ogrencisi olarak gelistirdigim, projelerimi ve yetkinliklerimi sergiledigim kisisel web sitemdir.
+
+**Siteye Git:** https://web-projesi-2026.github.io/anil-berk-keskin_web-portfolio/
+
 ---
-🗺️ Site Haritası
-Sayfa	İçerik
-`index.html`	Ana sayfa ve kısa özet
-`pages/about.html`	Yazılım yolculuğum, hedeflerim, becerilerim ve eğitimim
-`pages/Projects.html`	Geliştirdiğim web ve sistem analizi projeleri
-`pages/contact.html`	Bana ulaşabileceğiniz iletişim formu ve sosyal medya hesapları
+
+## Site Haritasi
+
+| Sayfa | Icerik |
+|-------|--------|
+| `index.html` | Ana sayfa ve kisa ozet |
+| `pages/about.html` | Yazilim yolculugum, hedeflerim, becerilerim ve egitimim |
+| `pages/Projects.html` | Gelistirdigim web ve sistem analizi projeleri |
+| `pages/contact.html` | Bana ulasabileceginiz iletisim formu ve sosyal medya hesaplari |
+
 ---
-⌨️ Teknoloji Yığını
-Araç / Dil	Rolü
-HTML5	Sayfaların temel iskeleti
-CSS3	Görsel tasarım ve mobil uyumluluk
-Vanilla JavaScript	Dinamik etkileşimler ve istemci tarafı mantık
-PHP 8	Sunucu tarafı API katmanı
-MySQL	İletişim formu mesajlarının saklanması
-PHPMailer	Gmail SMTP üzerinden otomatik e-posta bildirimi
-Git & GitHub	Versiyon kontrolü
+
+## Teknoloji Yigini
+
+| Arac / Dil | Rolu |
+|------------|------|
+| HTML5 | Sayfalarin temel iskeleti |
+| CSS3 | Gorsel tasarim ve mobil uyumluluk |
+| Vanilla JavaScript | Dinamik etkilesimler ve istemci tarafi mantik |
+| PHP 8 | Sunucu tarafi API katmani |
+| MySQL | Iletisim formu mesajlarinin saklanmasi |
+| PHPMailer | Gmail SMTP uzerinden otomatik e-posta bildirimi |
+| Git & GitHub | Versiyon kontrolu |
+
 ---
-🌟 Özellikler
-🃏 Dinamik Proje Kartları
-Projeler sabit HTML yerine `assets/data/projects.json` dosyasından JavaScript ile dinamik olarak oluşturulur. Her kart; başlık, açıklama, teknoloji etiketleri ve çoklu görsel içerir. Yeni proje eklemek için yalnızca JSON dosyasını düzenlemek yeterlidir.
-📋 İnceleme Listesi
-Her proje kartında "İnceleme Listesine Al" butonu bulunur. Seçilen projeler `localStorage` ile tarayıcıya kaydedilir; sayfa yenilendiğinde kaybolmaz. Liste sayfanın alt kısmında ayrıca listelenir, istenmeyen projeler kaldırılabilir.
-🖼️ Otomatik Görsel Slider
-Her proje kartı ve modal penceresinde kendi slider'ı bulunur. Görseller otomatik ilerler; önceki/sonraki butonlarıyla veya nokta göstergeleriyle manuel geçiş de yapılabilir.
-🗄️ PHP + MySQL Mesaj Yönetimi
-İletişim formundan gelen mesajlar veritabanına kaydedilir. API katmanı şu uç noktalardan oluşur:
-Dosya	Görev
-`api/mesaj\_gonder.php`	Formu alır, veritabanına kaydeder, e-posta gönderir
-`api/mesajlari\_getir.php`	Kayıtlı mesajları listeler
-`api/mesaj\_guncelle.php`	Mesaj durumunu günceller
-`api/mesaj\_sil.php`	Mesajı siler
-Tüm sorgular prepared statement kullanır; SQL injection'a karşı korumalıdır.
-📧 PHPMailer ile E-posta Bildirimi
-Ziyaretçi formu gönderdiğinde PHPMailer, Gmail SMTP üzerinden otomatik bildirim e-postası iletir. SMTP kimlik bilgileri `.env` dosyasında tutulur; kaynak kodda yer almaz.
-🌙 Dark / Light Mod
-Tüm sayfalarda kullanıcı tercihini `localStorage`'a kaydeden tema geçişi mevcuttur. Sayfa yenilendiğinde son tercih hatırlanır.
-📱 Tam Responsive Tasarım
-`responsive.css` ile mobil, tablet ve masaüstü için ayrı kırılma noktaları tanımlanmıştır. Navigasyon, kartlar ve modaller tüm ekran boyutlarında düzgün görüntülenir.
+
+## Ozellikler
+
+### Dinamik Proje Kartlari
+
+Projeler sabit HTML yerine `assets/data/projects.json` dosyasindan JavaScript ile dinamik olarak olusturulur. Her kart; baslik, aciklama, teknoloji etiketleri ve coklu gorsel icerir. Yeni proje eklemek icin yalnizca JSON dosyasini duzenlemek yeterlidir.
+
+### Inceleme Listesi
+
+Her proje kartinda **Inceleme Listesine Al** butonu bulunur. Secilen projeler `localStorage` ile tarayiciya kaydedilir; sayfa yenilendiginde kaybolmaz. Liste sayfanin alt kisminda ayrica listelenir, istenmeyen projeler kaldirilabilir.
+
+### Otomatik Gorsel Slider
+
+Her proje karti ve modal penceresinde kendi slideri bulunur. Gorseller otomatik ilerler; onceki/sonraki butonlariyla veya nokta gostergeleriyle manuel gecis de yapilabilir.
+
+### PHP + MySQL Mesaj Yonetimi
+
+Iletisim formundan gelen mesajlar veritabanina kaydedilir. API katmani su uc noktalardan olusur:
+
+| Dosya | Gorev |
+|-------|-------|
+| `api/mesaj_gonder.php` | Formu alir, veritabanina kaydeder, e-posta gonderir |
+| `api/mesajlari_getir.php` | Kayitli mesajlari listeler |
+| `api/mesaj_guncelle.php` | Mesaj durumunu gunceller |
+| `api/mesaj_sil.php` | Mesaji siler |
+
+Tum sorgular prepared statement kullanir; SQL injection'a karsi korumalidir.
+
+### PHPMailer ile E-posta Bildirimi
+
+Ziyaretci formu gonderdiginde PHPMailer, Gmail SMTP uzerinden otomatik bildirim e-postasi iletir. SMTP kimlik bilgileri `.env` dosyasinda tutulur; kaynak kodda yer almaz.
+
+### Dark / Light Mod
+
+Tum sayfalarda kullanici tercihini `localStorage`'a kaydeden tema gecisi mevcuttur. Sayfa yenilendiginde son tercih hatirlanir.
+
+### Tam Responsive Tasarim
+
+`responsive.css` ile mobil, tablet ve masaustu icin ayri kirilma noktalari tanimlanmistir. Navigasyon, kartlar ve modaller tum ekran boyutlarinda duzgun goruntuler.
+
 ---
-📂 Klasör Dizini
-```text
-anil-berk-keskin\_web-portfolio/
-│
-├── index.html                  # Ana sayfa
-│
-├── pages/
-│   ├── about.html              # Hakkımda \& Beceriler
-│   ├── Projects.html           # Projeler
-│   └── contact.html            # İletişim
-│
-├── assets/
-│   ├── css/
-│   │   ├── global.css          # Ortak stiller
-│   │   ├── style.css           # Ana sayfa
-│   │   ├── about.css           # Hakkımda sayfası
-│   │   ├── projects.css        # Projeler sayfası
-│   │   ├── contact.css         # İletişim sayfası
-│   │   └── responsive.css      # Mobil \& tablet uyumu
-│   ├── js/
-│   │   └── main.js             # Tüm JavaScript mantığı
-│   ├── data/
-│   │   └── projects.json       # Proje verileri (dinamik yükleme)
-│   └── favicon.svg
-│
-├── api/
-│   ├── db.php                  # Veritabanı bağlantısı (.env'den okur)
-│   ├── mesaj\_gonder.php        # Form + e-posta bildirimi
-│   ├── mesajlari\_getir.php     # Mesaj listeleme
-│   ├── mesaj\_guncelle.php      # Durum güncelleme
-│   ├── mesaj\_sil.php           # Mesaj silme
-│   └── PHPMailer/              # PHPMailer kütüphanesi
-│
-├── images/                     # Proje görselleri
-│
-├── .env.example                # Ortam değişkenleri şablonu
-├── .gitignore
-└── README.md
+
+## Klasor Dizini
+
 ```
----
-⚙️ Kurulum
-Repoyu klonla:
-```bash
-git clone https://github.com/web-projesi-2026/anil-berk-keskin\_web-portfolio.git
+anil-berk-keskin_web-portfolio/
+|
++-- index.html
+|
++-- pages/
+|   +-- about.html
+|   +-- Projects.html
+|   +-- contact.html
+|
++-- assets/
+|   +-- css/
+|   |   +-- global.css
+|   |   +-- style.css
+|   |   +-- about.css
+|   |   +-- projects.css
+|   |   +-- contact.css
+|   |   +-- responsive.css
+|   +-- js/
+|   |   +-- main.js
+|   +-- data/
+|   |   +-- projects.json
+|   +-- favicon.svg
+|
++-- api/
+|   +-- db.php
+|   +-- mesaj_gonder.php
+|   +-- mesajlari_getir.php
+|   +-- mesaj_guncelle.php
+|   +-- mesaj_sil.php
+|   +-- PHPMailer/
+|
++-- images/
++-- .env.example
++-- .gitignore
++-- README.md
 ```
-`.env.example` dosyasını kopyalayıp düzenle:
-```bash
+
+---
+
+## Kurulum
+
+1. Repoyu klonla:
+
+```
+git clone https://github.com/web-projesi-2026/anil-berk-keskin_web-portfolio.git
+```
+
+2. `.env.example` dosyasini kopyalayip duzenle:
+
+```
 cp .env.example .env
 ```
-`.env` içini kendi bilgilerinle doldur:
-```
-DB\_HOST=localhost
-DB\_USER=kullanici\_adin
-DB\_PASS=sifren
-DB\_NAME=veritabani\_adin
 
-MAIL\_USER=gmail\_adresin@gmail.com
-MAIL\_PASS=gmail\_uygulama\_sifren
+3. `.env` icini kendi bilgilerinle doldur:
+
 ```
-Veritabanında `mesajlar` tablosunu oluştur:
+DB_HOST=localhost
+DB_USER=kullanici_adin
+DB_PASS=sifren
+DB_NAME=veritabani_adin
+
+MAIL_USER=gmail_adresin@gmail.com
+MAIL_PASS=gmail_uygulama_sifren
+```
+
+4. Veritabaninda mesajlar tablosunu olustur:
+
 ```sql
 CREATE TABLE mesajlar (
-    id INT AUTO\_INCREMENT PRIMARY KEY,
+    id INT AUTO_INCREMENT PRIMARY KEY,
     ad VARCHAR(100),
     email VARCHAR(150),
     mesaj TEXT,
     durum VARCHAR(20) DEFAULT 'okunmadi',
-    tarih TIMESTAMP DEFAULT CURRENT\_TIMESTAMP
+    tarih TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 ```
-Projeyi sunucunun kök dizinine kopyala ve tarayıcıdan aç.
-> `.env` dosyası `.gitignore` ile versiyon kontrolünden hariç tutulmuştur; kimlik bilgileri repoya girmez.
+
+5. Projeyi sunucunun kok dizinine kopyala ve tarayicidan ac.
+
+> `.env` dosyasi `.gitignore` ile versiyon kontrolunden haric tutulmustur; kimlik bilgileri repoya girmez.
+
 ---
-📌 Bana Ulaşın
-Ağ	Bağlantı
-GitHub	github.com/AnilBerkKeskin
+
+## Bana Ulasin
+
+| Ag | Baglanti |
+|----|----------|
+| GitHub | https://github.com/AnilBerkKeskin |
