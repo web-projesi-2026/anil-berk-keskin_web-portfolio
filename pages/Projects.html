@@ -2,6 +2,7 @@
 <html lang="tr">
 <head>
   <meta charset="UTF-8"/>
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Projeler — Anıl Berk Keskin</title>
   <link rel="stylesheet" href="../assets/css/global.css"/>
@@ -43,8 +44,29 @@
   </div>
 
   <section class="projects-section">
-    <!-- Kartlar JS tarafından projects.json'dan dinamik üretilir -->
+
+    <!-- ── Arama + Filtre ── -->
+    <div class="projects-toolbar">
+      <div class="projects-search-wrap">
+        <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="search" id="projeArama" class="projects-search" placeholder="Proje veya teknoloji ara..." autocomplete="off">
+        <button class="search-clear" id="aramaTumSifirla" aria-label="Temizle" style="display:none">✕</button>
+      </div>
+      <div class="projects-filters" id="projeFiltreler">
+        <button class="filter-btn active" data-filter="tumu">Tümü</button>
+      </div>
+    </div>
+
+    <p class="projects-sonuc" id="projeSonuc"></p>
+
+    <!-- Kartlar JS tarafından dinamik üretilir -->
     <div class="projects-grid--two" id="projectsGrid"></div>
+
+    <div class="projects-bos" id="projeBos" style="display:none">
+      <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.5" width="48" height="48"><circle cx="32" cy="28" r="14"/><line x1="42" y1="42" x2="54" y2="54"/><line x1="26" y1="28" x2="38" y2="28"/></svg>
+      <p>Arama kriterlerinize uygun proje bulunamadı.</p>
+    </div>
+
   </section>
 
   <!-- YÜZEN İNCELEME LİSTESİ -->
@@ -83,6 +105,57 @@
 </div>
 
 
+<!-- Inline project data — CORS güvenli çalışır -->
+<script>
+window.PROJECTS_DATA = [
+  {
+    "id": "eticaret",
+    "num": "01",
+    "baslik": "E-Ticaret Sitesi",
+    "kisa_aciklama": "PHP ve MySQL ile dinamik ürün yönetimi, oturum tabanlı sepet sistemi.",
+    "uzun_aciklama": "Kullanıcıların ürün listeleyebildiği, sepete ekleme yapabildiği ve sipariş oluşturabildiği tam işlevli bir alışveriş sitesi. PHP ve MySQL ile geliştirildi.",
+    "ozellikler": [
+      "Dinamik ürün listeleme ve kategori filtreleme",
+      "Oturum tabanlı sepet yönetimi",
+      "Kullanıcı kayıt ve giriş sistemi",
+      "Yönetici paneli ile ürün ekleme/düzenleme",
+      "MySQL ile veritabanı entegrasyonu"
+    ],
+    "teknolojiler": ["HTML", "CSS", "JavaScript", "PHP", "MySQL"],
+    "thumb_class": "thumb-1",
+    "gorseller": [
+      "../images/Anilklise1.png",
+      "../images/Anilklise2.png",
+      "../images/Anilklise3.png"
+    ],
+    "placeholder": "../images/eticaret-placeholder.svg",
+    "github": "https://github.com/AnilBerkKeskin"
+  },
+  {
+    "id": "personel",
+    "num": "02",
+    "baslik": "Personel Takip Programı",
+    "kisa_aciklama": "Yönetici ve çalışan rolleri, izin ve mesai takibi içeren web uygulaması.",
+    "uzun_aciklama": "Şirket çalışanlarının bilgilerini, izin durumlarını ve mesai saatlerini yönetmeye yarayan web tabanlı uygulama. PHP ve MySQL ile geliştirildi.",
+    "ozellikler": [
+      "Yönetici ve çalışan rolü ayrımı",
+      "İzin talep ve onay sistemi",
+      "Mesai saati takibi ve raporlama",
+      "Çalışan bilgi güncelleme paneli",
+      "MySQL veritabanı ile kayıt yönetimi"
+    ],
+    "teknolojiler": ["HTML", "CSS", "PHP", "MySQL"],
+    "thumb_class": "thumb-4",
+    "gorseller": [
+      "../images/PersonelTakip1.png",
+      "../images/PersonelTakip2.png",
+      "../images/PersonelTakip3.png"
+    ],
+    "placeholder": "../images/personel-placeholder.svg",
+    "github": "https://github.com/AnilBerkKeskin"
+  }
+];
+</script>
 <script src="../assets/js/main.js"></script>
 </body>
 </html>

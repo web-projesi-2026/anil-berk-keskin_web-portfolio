@@ -2,6 +2,7 @@
 <html lang="tr">
 <head>
   <meta charset="UTF-8"/>
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>İletişim — Anıl Berk Keskin</title>
   <link rel="stylesheet" href="../assets/css/global.css"/>
@@ -147,6 +148,23 @@
 
   </div>
 
+  <!-- YÜZEN MESAJ LİSTESİ -->
+  <div class="mesaj-fab">
+    <div class="mesaj-panel" id="mesajPanel">
+      <div class="mesaj-panel-header">
+        <h4>✉️ Gönderilen Mesajlar</h4>
+        <button class="mesaj-panel-clear" id="mesajClear">Temizle</button>
+      </div>
+      <div class="mesaj-panel-body" id="mesajPanelBody">
+        <div class="mesaj-empty">Henüz mesaj göndermediniz.</div>
+      </div>
+    </div>
+    <button class="mesaj-btn" id="mesajToggle" aria-label="Gönderilen mesajlar">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+      <span class="mesaj-count" id="mesajCount">0</span>
+    </button>
+  </div>
+
   <footer>
     <div class="footer-logo">Anıl Berk Keskin<span>.</span></div>
     <ul class="footer-links">
@@ -160,11 +178,6 @@
 
 </div>
 
-<!-- EmailJS SDK -->
-<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-<script>
-  emailjs.init('a9_GmF8rHqaZ4AIj0');
-</script>
 <script src="../assets/js/main.js"></script>
 </body>
 </html>
